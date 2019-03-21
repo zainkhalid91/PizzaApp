@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:summary="turn on off current location"
+        android:title="Current Location" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:summary="Turn on off notification"
+        android:title="Notification" />
+    <ListPreference
+        android:entries="@array/list"
+        android:entryValues="@array/list"
+        android:summary="Choose a currency to display rates"
+        android:title="Currency" />
+
+    <Preference
+        android:key="password"
+        android:summary="Change your account password"
+        android:title="Password" />
+
+    <EditTextPreference
+        android:summary="Deactivate your account temporarily"
+        android:title="Deactivate Account" />
+
+    <EditTextPreference
+        android:summary="Close all your account data"
+        android:title="Delete Account" />
+
+</PreferenceScreen>
