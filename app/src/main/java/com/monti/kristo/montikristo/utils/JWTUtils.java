@@ -1,5 +1,7 @@
 package com.monti.kristo.montikristo.utils;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Base64;
 import android.util.Log;
 
@@ -20,6 +22,7 @@ public class JWTUtils {
         return "";
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private static String getJson(String strEncoded) throws UnsupportedEncodingException {
         byte[] decodedBytes = Base64.decode(strEncoded, Base64.URL_SAFE);
         return new String(decodedBytes, StandardCharsets.UTF_8);

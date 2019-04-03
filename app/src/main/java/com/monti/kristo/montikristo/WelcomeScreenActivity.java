@@ -2,6 +2,7 @@ package com.monti.kristo.montikristo;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,9 +34,10 @@ public class WelcomeScreenActivity extends AppCompatActivity {
         subInfo = findViewById(R.id.info_);
         signup_btn = findViewById(R.id.btn_signup);
 
-        infoMain.setTypeface(myFont);
-        subInfo.setTypeface(myFont);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            infoMain.setTypeface(myFont);
+            subInfo.setTypeface(myFont);
+        }
 
         btn_login_email = findViewById(R.id.btn_signup_email);
         btn_login_email.setOnClickListener(new View.OnClickListener() {

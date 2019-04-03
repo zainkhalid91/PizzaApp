@@ -32,19 +32,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/pizzaNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="45dp"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/header"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMain" />
 
-    <!--  <ScrollView
-          android:id="@+id/recyclerLayer"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:layout_alignParentTop="true"
-          android:focusableInTouchMode="true"
-          android:scrollbars="vertical"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/header">
-  -->
+    <TextView
+        android:id="@+id/pizza_ingredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/pizzaNameTitle"
+        app:layout_constraintTop_toBottomOf="@+id/pizzaNameTitle" />
+
+
     <include
         layout="@layout/content_main_previous_order"
         android:layout_width="0dp"
@@ -92,7 +101,6 @@
             android:gravity="center"
             android:textColor="@color/colorBlack"
             android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/recyclerLayer"
             app:layout_constraintTop_toBottomOf="@+id/header" />
 
         <RelativeLayout

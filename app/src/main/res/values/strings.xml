@@ -8,13 +8,9 @@
     <string name="nav_item_rateus">Rate Us</string>
     <string name="nav_item_share">Share</string>
     <string name="nav_item_customer_care">Type your message here our assistant will contact you within 24 hours </string>
-    <string name="about_pizza">fdshfshfhsfhsdjfhsdfhsdhf fhdsfhdsfhdshfjdshfds jhfjdhfjdhfhdsjfhdshfjhdsjfhdsjfhs fjhfjsdhfjsdhfjhsdjfhdsjhfjhsdjfhsdhfhsdf jshfjsdhfjshfjshdhfjsdhf jsdhfjsdhsjdfhhdjkhfjhdfjsfhjsdhfjkfhdsjfdh</string>
     <string name="signin__error">Invalid Email/Password</string>
     <string name="progressdialog_processing">Processing…</string>
-    <string name="delete">DELETE</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
-
-    <string name="orderPlaceQty">%d (Qty)</string>
 
 
     <string-array name="list">

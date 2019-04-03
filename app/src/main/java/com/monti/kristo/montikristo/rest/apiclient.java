@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class apiclient {
 
     public static final String BASE_URL = "https://montikristo.com/api/";
-    public static final String BASE_URL_LOCAL = "http://192.168.1.8:3000/api/";
+    public static final String BASE_URL_LOCAL = "http://192.168.1.11:3000/api/";
 
     private static Retrofit retrofit = null;
     private static apiclient apiClientInstance;

@@ -132,7 +132,7 @@ public class ProfileActivity extends AppCompatActivity {
         edit_address.setTypeface(myFontReg);
         edit_pNum.setText(loginUserModel.getpNum());
         edit_pNum.setTypeface(myFontReg);
-        String finalUrl = "https://s3.ap-southeast-1.amazonaws.com/montikrist/profileImages/" + cID;
+        String finalUrl = BuildConfig.AMAZON_URL + cID;
         getImage(finalUrl);
 
         btn_back = findViewById(R.id.btn_back_prof);
@@ -428,7 +428,8 @@ public class ProfileActivity extends AppCompatActivity {
                     edit_address.setText(userModel.getAddress());
                     edit_pNum.setText(userModel.getpNum());
                     emaill.setText(userModel.getEmail());
-                    String finalUrl = "https://ap-southeast-1.amazonaws.com/montikrist/" + userModel.getId();
+                    String finalUrl = BuildConfig.FINAL_URL + userModel.getId();
+
                     getImage(finalUrl);
 
                     Toast.makeText(getApplicationContext(), "Profile Updated Successfully", Toast.LENGTH_LONG).show();

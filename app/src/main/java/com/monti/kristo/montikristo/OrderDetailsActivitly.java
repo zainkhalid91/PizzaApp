@@ -1,7 +1,9 @@
 package com.monti.kristo.montikristo;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +24,9 @@ import com.google.gson.Gson;
 import com.monti.kristo.montikristo.model.AreaModel;
 import com.monti.kristo.montikristo.model.AssignedAreaModel;
 import com.monti.kristo.montikristo.model.BalanceModel;
+import com.monti.kristo.montikristo.model.Head;
 import com.monti.kristo.montikristo.model.LoginUserModel;
+import com.monti.kristo.montikristo.model.PreviousOrderModel;
 import com.monti.kristo.montikristo.model.PuchasedProductModel;
 import com.monti.kristo.montikristo.model.StatusModel;
 import com.monti.kristo.montikristo.rest.apiclient;
@@ -42,7 +47,8 @@ import retrofit2.Response;
 public class OrderDetailsActivitly extends AppCompatActivity {
 
     Button btn_back, btn_order;
-    TextView subTotal, deliveryFee, total, cName, cAddresss, cMobile;
+    TextView subTotal, deliveryFee, total, cName, cMobile;
+    EditText cAddresss;
     TextView label, head1, head2, subTotalHead, deliverFeeHead, totalHead, nameHead, addressHead, mobileHead;
     int price, fee, userID, priceWithFee, netAmount, discount = 100;
     ProgressDialog dialog;
@@ -56,6 +62,8 @@ public class OrderDetailsActivitly extends AppCompatActivity {
     double sTotal = 0;
     AssignedAreaModel areaListModel;
     int areaId = 0;
+    PreviousOrderModel previousOrderModel;
+    Head head;
 
 
     @Override
@@ -148,7 +156,7 @@ public class OrderDetailsActivitly extends AppCompatActivity {
         btn_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                placeOrder(v, cID, gTotal, address, sTotal);
+                placeOrder(v, cID, gTotal, address, sTotal, cName.getText().toString());
 
             }
         });
@@ -180,6 +188,7 @@ public class OrderDetailsActivitly extends AppCompatActivity {
                     for (int i = 0; i < areaListModel.getArea().size(); i++) {
                         AreaName.add(areaListModel.getArea().get(i).getName());
                     }
+                    AreaName.add(0, "Select Location");
                     assigned_area_spinner.setAdapter(new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, AreaName));
 
                 }
@@ -192,7 +201,7 @@ public class OrderDetailsActivitly extends AppCompatActivity {
         });
     }
 
-    private void placeOrder(View v, final int id, double gTotal, String address, double sTotal) {
+    private void placeOrder(View v, final int id, double gTotal, String address, double sTotal, String name) {
 
         dialog = new ProgressDialog(v.getContext());
         dialog.setMessage("Processing..");
@@ -207,11 +216,11 @@ public class OrderDetailsActivitly extends AppCompatActivity {
 
             Gson gson = new Gson();
             String products = gson.toJson(productModel.getCartItemsModels());
-            Toast.makeText(getApplicationContext(), "Order Placed Sucessfully", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Order Placed Sucessfully", Toast.LENGTH_LONG).show();
             Call<StatusModel> call = apiclient
                     .getApiClientInstance()
                     .getApi()
-                    .placeOrder(id, gTotal, address, gTotal, c.getTime(), formattedDate, products, areaId, cMobile.getText().toString());
+                    .placeOrder(id, name, gTotal, address, gTotal, c.getTime(), formattedDate, products, areaId, cMobile.getText().toString());
 
             call.enqueue(new Callback<StatusModel>() {
                 @Override
@@ -224,12 +233,21 @@ public class OrderDetailsActivitly extends AppCompatActivity {
 
 
                     if (status.equals("true")) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(OrderDetailsActivitly.this).create(); //Read Update
+                        alertDialog.setTitle("Your order has been placed successfully");
+                        // alertDialog.setMessage("Order ID: " + head.getOrderID());
 
-                        Intent intent;
-                        intent = new Intent(getApplicationContext(), MyCartActivity.class);
-                        // intent.putExtra("cid",cID);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+
+                        alertDialog.setButton("Continue", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent;
+                                intent = new Intent(getApplicationContext(), MyCartActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        });
+
+                        alertDialog.show();  //<-- See This!
 
                     } else {
 

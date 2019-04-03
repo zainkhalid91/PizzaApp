@@ -14,6 +14,11 @@ public class SessionManager {
     private static final String KEY_USER_ID = "token";
     private static final String KEY_ITEM_COUNT = "count";
     private static final String GRAND_TOTAL = "total";
+    private static final Double SUB_TOTAL = 0.0;
+    private static final int DELIVERY_FREE = 0;
+    private static final Double GRAND_TOTAL_CALCULATED = 0.0;
+
+
     // LogCat tag
     private static String TAG = SessionManager.class.getSimpleName();
     // Shared Preferences
@@ -94,5 +99,15 @@ public class SessionManager {
         editor.commit();
     }
 
+    public static Double getSubTotal() {
+        return SUB_TOTAL;
+    }
 
+    public static int getDeliveryFree() {
+        return DELIVERY_FREE;
+    }
+
+    public static Double getGrandTotalCalculated() {
+        return GRAND_TOTAL_CALCULATED;
+    }
 }

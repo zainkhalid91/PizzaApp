@@ -116,6 +116,7 @@ interface ApiInterface {
     fun placeOrder(
 
             @Field("customerId") id: Int,
+            @Field("customerName") name: String,
             @Field("total") total: Double,
             @Field("address") address: String?,
             @Field("netAmount") netAmount: Double,

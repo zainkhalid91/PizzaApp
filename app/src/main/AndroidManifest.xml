@@ -46,7 +46,9 @@
         <activity android:name=".EmailCheckActivity" />
         <activity android:name=".VerificationCodeActivity" />
         <activity android:name=".MessageActivity" />
-        <activity android:name=".OrderDetailsActivitly" />
+        <activity
+            android:name=".OrderDetailsActivitly"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".PreviousOrdersActivity" />

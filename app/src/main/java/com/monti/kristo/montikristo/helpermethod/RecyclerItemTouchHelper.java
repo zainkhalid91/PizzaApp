@@ -49,11 +49,16 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     public void onChildDraw(Canvas c, RecyclerView recyclerView,
                             RecyclerView.ViewHolder viewHolder, float dX, float dY,
                             int actionState, boolean isCurrentlyActive) {
-        final View foregroundView = ((MyCartAdapter.MyViewHolder) viewHolder).viewForeground;
+        try {
+            final View foregroundView = ((MyCartAdapter.MyViewHolder) viewHolder).viewForeground;
 
-        getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dX, dY,
-                actionState, isCurrentlyActive);
+            getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dX, dY,
+                    actionState, isCurrentlyActive);
+        } catch (Exception ex) {
+
+        }
     }
+
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {

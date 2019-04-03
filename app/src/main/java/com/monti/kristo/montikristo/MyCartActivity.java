@@ -1,7 +1,5 @@
 package com.monti.kristo.montikristo;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -13,9 +11,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +28,7 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.monti.kristo.montikristo.adapters.MyCartAdapter;
 import com.monti.kristo.montikristo.helpermethod.RecyclerItemTouchHelper;
 import com.monti.kristo.montikristo.interfaces.BalanceChangeListner;
@@ -43,7 +42,6 @@ import com.monti.kristo.montikristo.model.StatusItemModel;
 import com.monti.kristo.montikristo.model.StatusModel;
 import com.monti.kristo.montikristo.rest.apiclient;
 import com.monti.kristo.montikristo.utils.JWTUtils;
-import com.monti.kristo.montikristo.utils.RecyclerItemClickListener;
 import com.monti.kristo.montikristo.utils.SessionManager;
 
 import java.util.ArrayList;
@@ -57,22 +55,21 @@ import static com.monti.kristo.montikristo.utils.Constants.KEY_ORDER_DETAILS;
 
 public class MyCartActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, BalanceChangeListner {
 
+    public Button btn_back, confirmOrder, btnAdd, btnSub;
+    public TextView subTotal, delivery, pizzaTitle, pizzaPrice, pizzaQty, stapperQty, pizzaIngredientsHearder, pizzaNameHeaderTitle;
+    public TextView grandTotal;
+    public int selectedPostion = 0;
     GrandTotalModel grandTotalModel;
     private RecyclerView recyclerView;
     private MyCartAdapter adapter;
     private ArrayList<ItemsModel> itemsModelList;
     private ArrayList<ItemsModel> itemModelsServerData;
     private ArrayList<CartItemsModel> cartItemsModel;
-    private Button btn_back, confirmOrder, btnAdd, btnSub;
     private int price, fee, cid, pID;
-    private ProgressDialog progressDialog;
     private int itemPrice = 0, itemQty = 0, deliverFee = 0;
-    private TextView subTotal, delivery, grandTotal, pizzaTitle, pizzaPrice, pizzaQty, stapperQty;
     private KenBurnsView imageViewHeader;
-    private int selectedPostion = 0;
     private PuchasedProductModel puchasedProductModel;
     private SessionManager sessionManager;
-    private ScrollView recylerScrollView, layoutScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,11 +98,12 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
         pizzaPrice = findViewById(R.id.textPizzaPrice);
         pizzaQty = findViewById(R.id.textPizzaQty);
         stapperQty = findViewById(R.id.pizza_qty);
+        pizzaIngredientsHearder = findViewById(R.id.pizza_ingredients);
+        pizzaNameHeaderTitle = findViewById(R.id.pizzaNameTitle);
 
         btnAdd = findViewById(R.id.btnQtyAdd);
         btnSub = findViewById(R.id.btnQtySub);
 
-        BalanceModel balanceModel = new BalanceModel();
 
         itemModelsServerData = new ArrayList<>();
 
@@ -162,18 +160,22 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+        /*recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 selectedPostion = position;
                 updateView();
+               // adapter.setBackground0(position);
+                if (itemsModelList.get(position).getQuantity() == 0) {
+                    grandTotal.setText("PKR 0.0");
+                }
             }
 
             @Override
             public void onLongItemClick(View view, int position) {
 
             }
-        }));
+        }));*/
 
         imageViewHeader.setTransitionListener(new KenBurnsView.TransitionListener() {
             @Override
@@ -192,29 +194,46 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
 
         btnAdd.setOnClickListener(v -> {
-            int count = itemsModelList.get(selectedPostion).getQuantity();
-            if (count >= 0) {
-                count += 1;
-                itemsModelList.get(selectedPostion).setQuantity(count);
-                adapter.notifyDataSetChanged();
-                stapperQty.setText("" + count);
-                pizzaQty.setText(count + "(Qty)");
+            try {
+                int count = itemsModelList.get(selectedPostion).getQuantity();
+                if (count >= 0) {
+                    count += 1;
+                    itemsModelList.get(selectedPostion).setQuantity(count);
+                    adapter.notifyDataSetChanged();
+                    stapperQty.setText("" + count);
+                    pizzaQty.setText(count + "(Qty)");
 
-                calculateTotalBalance();
+                    calculateTotalBalance();
 
+                }
+            } catch (Exception ex) {
+                Toast.makeText(getApplicationContext(), "Server not responding, try again later.", Toast.LENGTH_LONG).show();
             }
         });
 
         btnSub.setOnClickListener(v -> {
-            int count = itemsModelList.get(selectedPostion).getQuantity();
-            if (count > 0) {
-                count -= 1;
-                itemsModelList.get(selectedPostion).setQuantity(count);
-                adapter.notifyDataSetChanged();
-                stapperQty.setText("" + count);
-                pizzaQty.setText(count + "(Qty)");
+            try {
 
-                calculateTotalBalance();
+                if (stapperQty.getText() == "0") {
+                    itemsModelList.remove(selectedPostion);
+                } else {
+                    int count = itemsModelList.get(selectedPostion).getQuantity();
+                    if (count > 0) {
+                        count -= 1;
+                        itemsModelList.get(selectedPostion).setQuantity(count);
+                        adapter.notifyDataSetChanged();
+                        stapperQty.setText("" + count);
+                        pizzaQty.setText(count + "(Qty)");
+
+                        calculateTotalBalance();
+                    }
+                    if (stapperQty.getText() == "0") {
+                        grandTotal.setText("0.0");
+
+                    }
+                }
+            } catch (Exception ex) {
+                Toast.makeText(getApplicationContext(), "Server not responding, try again later.", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -259,23 +278,66 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
 
                 .addDrawerItems(
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_cart)).withIcon(R.drawable.shopping_bag),
-                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_profile)).withIcon(R.drawable.profile),
-                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_contact)).withIcon(R.drawable.contact_us),
-                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_settings)).withIcon(R.drawable.settings),
+                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_cart)).withIcon(R.drawable.shopping_bag).withIdentifier(0),
+                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_profile)).withIcon(R.drawable.profile).withIdentifier(1),
+                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_contact)).withIcon(R.drawable.contact_us).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_settings)).withIcon(R.drawable.settings).withIdentifier(3),
 
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_rateus)).withIcon(R.drawable.rate_us),
-                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_share)).withIcon(R.drawable.share),
+                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_rateus)).withIcon(R.drawable.rate_us).withIdentifier(4),
+                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_share)).withIcon(R.drawable.share).withIdentifier(5),
 
                         new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName("Terms and Conditions").withIcon(R.drawable.terms),
-                        new SecondaryDrawerItem().withName("Logout").withIcon(R.drawable.logout).withTextColor(Color.RED)
-
-
-                )
+                        new SecondaryDrawerItem().withName("Terms and Conditions").withIcon(R.drawable.terms).withIdentifier(6),
+                        new SecondaryDrawerItem().withName("Logout").withIcon(R.drawable.logout).withTextColor(Color.RED).withIdentifier(7))
                 .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                    selectItem(position);
+                    if (drawerItem instanceof Nameable) {
+
+                        if (drawerItem.getIdentifier() == 0) {
+                            Intent intent = new Intent(MyCartActivity.this, PreviousOrdersActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                        if (drawerItem.getIdentifier() == 1) {
+                            Intent profile;
+                            profile = new Intent(MyCartActivity.this, ProfileActivity.class);
+                            profile.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(profile);
+
+                        }
+                        if (drawerItem.getIdentifier() == 2) {
+                            Intent chat;
+                            chat = new Intent(MyCartActivity.this, ChatActivity.class);
+                            chat.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(chat);
+
+                        }
+                        if (drawerItem.getIdentifier() == 3) {
+                            Intent settings;
+                            settings = new Intent(MyCartActivity.this, SettingsActivity.class);
+                            settings.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(settings);
+                        }
+                        if (drawerItem.getIdentifier() == 4) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.monti.kristo")));
+                        }
+                        if (drawerItem.getIdentifier() == 5) {
+                            Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                            intent.setType("text/plain");
+                            intent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.monti.kristo");
+                            startActivity(Intent.createChooser(intent, "Share"));
+                        }
+
+                        if (drawerItem.getIdentifier() == 7) {
+                            sessionManager.setLoggined(false);
+                            sessionManager.setLogOut(true);
+                            Intent logout;
+                            logout = new Intent(MyCartActivity.this, WelcomeScreenActivity.class);
+                            logout.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(logout);
+                            finish();
+                        }
+                    }
                     return false;
                 })
                 .withOnDrawerListener(new Drawer.OnDrawerListener() {
@@ -303,75 +365,6 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
         result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
     }
 
-    private void selectItem(int position) {
-        final String[] url = {""};
-        final CharSequence[] items;
-        AlertDialog.Builder builder;
-        AlertDialog alert;
-        switch (position) {
-            case 2:
-                Intent intent;
-                intent = new Intent(MyCartActivity.this, PreviousOrdersActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                break;
-//            case 2:
-//                manageWalletsRouter.open(this, false);
-//                break;
-            case 3:
-
-                Intent profile;
-                profile = new Intent(MyCartActivity.this, ProfileActivity.class);
-                profile.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(profile);
-                break;
-
-
-            case 4:
-
-                Intent chat;
-                chat = new Intent(MyCartActivity.this, ChatActivity.class);
-                chat.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(chat);
-                break;
-
-                /*Intent mailto = new Intent(Intent.ACTION_SENDTO);
-                mailto.setType("message/rfc822"); // use from live device
-                mailto.setData(Uri.parse("mailto:answer@speroinfo.io")
-                        .buildUpon()
-                        .appendQueryParameter("cc", "answer@speroinfo.io")
-                        .appendQueryParameter("subject", "Etherin Cash support question")
-                        .appendQueryParameter("body", "Dear Etherin cash support,")
-                        .build());
-                startActivity(Intent.createChooser(mailto, "Select email application."));
-                break;*/
-
-            case 5:
-
-                Intent settings;
-                settings = new Intent(MyCartActivity.this, SettingsActivity.class);
-                settings.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(settings);
-                break;
-
-
-            case 11:
-                sessionManager.setLoggined(false);
-                sessionManager.setLogOut(true);
-                Intent logout;
-                logout = new Intent(MyCartActivity.this, WelcomeScreenActivity.class);
-                logout.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(logout);
-                finish();
-                break;
-
-            case 7:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.monti.kristo.montikristo")));
-                break;
-
-        }
-
-    }
 
     protected Toolbar toolbar() {
         Toolbar toolbar = findViewById(R.id.toolbarMain);
@@ -382,8 +375,10 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
         return toolbar;
     }
 
-    private void updateView() {
+    public void updateView() {
         pizzaTitle.setText(itemsModelList.get(selectedPostion).getName());
+        pizzaNameHeaderTitle.setText(itemsModelList.get(selectedPostion).getName());
+        pizzaIngredientsHearder.setText(itemsModelList.get(selectedPostion).getDescription());
         pizzaPrice.setText("PKR" + String.valueOf(itemsModelList.get(selectedPostion).getPrice()) + " x");
         pizzaQty.setText(String.valueOf(itemsModelList.get(selectedPostion).getQuantity()) + "(Qty)");
         stapperQty.setText("" + itemsModelList.get(selectedPostion).getQuantity());
@@ -392,7 +387,7 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
 
     }
 
-    private void calculateTotalBalance() {
+    public void calculateTotalBalance() {
         double totalBalance = 0;//grandTotalModel.getTotal();
         double subTotal = 0;
         double delieveryFee = 0;
@@ -406,6 +401,7 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
                 grandTotalModel.setTotal(totalBalance);
                 subTotal += (itemsModel.getPrice() * itemsModel.getQuantity());
                 itemsModel.setSubTotal(subTotal);
+
             }
         }
 
@@ -445,12 +441,22 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
     }
 
     public void sendToOrderDetails() {
-        if (puchasedProductModel.getBalanceModel().getGrandTotal() > 0) {
-            Intent intent = new Intent(getApplicationContext(), OrderDetailsActivitly.class);
-            intent.putExtra(KEY_ORDER_DETAILS, puchasedProductModel);
-            startActivity(intent);
-        } else {
-            Toast.makeText(getApplicationContext(), "Your cart is empty.", Toast.LENGTH_LONG).show();
+        try {
+            if (puchasedProductModel.getBalanceModel().getGrandTotal() > 0) {
+                Intent intent = new Intent(getApplicationContext(), OrderDetailsActivitly.class);
+                intent.putExtra(KEY_ORDER_DETAILS, puchasedProductModel);
+                startActivity(intent);
+            } else {
+                Toast toast = Toast.makeText(this, "Please select your cart item before proceeding.", Toast.LENGTH_LONG);
+                TextView v = toast.getView().findViewById(android.R.id.message);
+                if (v != null) v.setGravity(Gravity.CENTER_HORIZONTAL);
+                toast.show();
+
+                //  Toast.makeText(getApplicationContext(), "Please select your cart item before proceeding .", Toast.LENGTH_LONG).show();
+
+            }
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(), "Sever not responding, try again later.", Toast.LENGTH_LONG).show();
 
         }
     }
@@ -540,25 +546,26 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
                 @Override
                 public void onResponse(Call<StatusModel> call, Response<StatusModel> response) {
 
+                    if (response.isSuccessful()) {
+                        //    mSwipeRefreshLayout.setRefreshing(false);
 
-                    //    mSwipeRefreshLayout.setRefreshing(false);
-
-                    // progressDialog.cancel();
-                    StatusModel resp = response.body();
-                    String status = resp.getStatus();
-
-
-                    if (status.equals(true)) {
-
-                        Toast.makeText(getApplicationContext(), "" + resp.getMsg(), Toast.LENGTH_LONG).show();
-
-
-                    } else {
-                        //   mSwipeRefreshLayout.setRefreshing(false);
                         // progressDialog.cancel();
+                        StatusModel resp = response.body();
+                        String status = resp.getStatus();
 
-                        Toast.makeText(getApplicationContext(), "" + resp.getMsg(), Toast.LENGTH_LONG).show();
 
+                        if (status.equals(true)) {
+
+                            Toast.makeText(getApplicationContext(), "" + resp.getMsg(), Toast.LENGTH_LONG).show();
+
+
+                        } else {
+                            //   mSwipeRefreshLayout.setRefreshing(false);
+                            // progressDialog.cancel();
+
+                            Toast.makeText(getApplicationContext(), "" + resp.getMsg(), Toast.LENGTH_LONG).show();
+
+                        }
                     }
                 }
 
@@ -567,7 +574,7 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
                     //     mSwipeRefreshLayout.setRefreshing(false);
                     //   progressDialog.cancel();
 
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Server not responding", Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -604,6 +611,6 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
 
         subTotal.setText("PKR " + balanceModel.getSubTotal());
         delivery.setText("PKR " + balanceModel.getDelieveryFee());
-        grandTotal.setText("PKR " + grandTotalModel.getTotal());
+        grandTotal.setText("PKR " + balanceModel.getGrandTotal());
     }
 }

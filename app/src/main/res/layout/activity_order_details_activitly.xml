@@ -285,11 +285,39 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/relalayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/layout_name">
+
+
+                <Spinner
+                    android:id="@+id/spinner_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:spinnerMode="dropdown" />
+
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/spinner_location"
+                    android:background="#c0c0c0" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/layout_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/layout_name">
+                android:layout_marginRight="16dp"
+
+                app:layout_constraintTop_toBottomOf="@id/relalayout">
 
                 <TextView
                     android:id="@+id/head_address"
@@ -307,16 +335,17 @@
                     android:text="Address"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txt_address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/head_address"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:gravity="left"
                     android:padding="10dp"
+                    android:layout_marginRight="8dp"
                     android:text=""
+                    android:background="@null"
                     android:textColor="@color/colorBlack"
                     android:textSize="18sp" />
 
@@ -371,15 +400,6 @@
                     android:background="#c0c0c0" />
 
             </RelativeLayout>
-
-            <Spinner
-                android:id="@+id/spinner_location"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:spinnerMode="dropdown" />
 
 
             <RelativeLayout

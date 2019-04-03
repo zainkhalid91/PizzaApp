@@ -107,45 +107,6 @@ class PreviousOrdersActivity : AppCompatActivity() {
         })
 
 
-        //        call.enqueue(new Callback<StatusCartModel>() {
-        //            @Override
-        //            public void onResponse(Call<StatusCartModel> call, Response<StatusCartModel> response) {
-        //
-        //
-        //                //
-        //
-        //                //   progressDialog.cancel();
-        //                StatusCartModel resp = response.body();
-        //                String status = resp.getStatus();
-        //
-        //
-        //                if (status.equals("true")) {
-        //
-        //                    cartItemsModels = new ArrayList<>(Arrays.asList(resp.getGetAllCartItems()));
-        //                    adapter = new PreviousOrderAdapter(getApplicationContext(), cartItemsModels);
-        //                    SessionManager sessionManager = new SessionManager(getApplicationContext());
-        //                    sessionManager.setBadgeValue(adapter.getItemCount());
-        //                    recyclerView.setAdapter(adapter);
-        //
-        //
-        //                } else {
-        //                    //   mSwipeRefreshLayout.setRefreshing(false);
-        //                    //     progressDialog.cancel();
-        //
-        //                    // Toast.makeText(getApplicationContext(), "Error occured.", Toast.LENGTH_LONG).show();
-        //
-        //                }
-        //            }
-        //
-        //            @Override
-        //            public void onFailure(Call<StatusCartModel> call, Throwable t) {
-        //                //     mSwipeRefreshLayout.setRefreshing(false);
-        //                //     progressDialog.cancel();
-        //
-        //
-        //
-        //            }
-        //        });
     }
 
     /**

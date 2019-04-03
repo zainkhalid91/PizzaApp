@@ -13,6 +13,15 @@ public class ItemsModel implements Serializable {
     private int quantity;
     private double subTotal = 0;
     private String Type;
+    private String ProductDescription;
+
+    public String getDescription() {
+        return ProductDescription;
+    }
+
+    public void setDescription(String description) {
+        this.ProductDescription = description;
+    }
 
     public String getType() {
         return Type;

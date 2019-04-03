@@ -38,20 +38,6 @@ class PreviousOrderAdapter(private val mContext: Context, private val cartItemsM
 
         holder.recyclerView.layoutManager = LinearLayoutManager(mContext)
         holder.recyclerView.adapter = PreOrderAdapter(details)
-        //holder.total.setText("RS. "+cartItemsModel.getSubTotal());
-
-
-        /* holder.thumbnail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, PizzaDetailsActivity.class);
-                mContext.startActivity(intent);
-            }
-        });
-*/
-
-        // loading album cover using Glide library
-        // Glide.with(mContext).load(prev_model.getThumbnail()).into(holder.thumbnail);
 
     }
 

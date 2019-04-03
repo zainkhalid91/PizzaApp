@@ -4,18 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#ffffff</color>
-    <color name="colorOffWhite">#faf9f9</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorgrey">#6b6767</color>
     <color name="colorRed">#ff0101</color>
-    <color name="colorTint">#e7e3e3</color>
     <color name="colorButton">#FE595F</color>
     <color name="ButtonShadow">#7ffe595f</color>
-    <color name="description">#a9a9a9</color>
-    <color name="item_name">#535353</color>
-    <color name="transparent">#00000000</color>
-    <color name="SelectedColor">#FE595F</color>
-    <color name="DefultColor">#ffffff</color>
     <color name="shadow">#66000000</color>
 
 

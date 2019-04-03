@@ -1,14 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+def amazonLink = '"' + AMAZON_URL + '"' ?: '""'
+def amazonLink2 = '"' + FINAL_URL + '"' ?: '""'
+
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.monti.kristo"
-        minSdkVersion 17
+        minSdkVersion 18
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.2"
+        versionCode 9
+        versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -16,6 +19,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "AMAZON_URL", amazonLink)
+            buildConfigField("String", "FINAL_URL", amazonLink2)
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "AMAZON_URL", amazonLink)
+            buildConfigField("String", "FINAL_URL", amazonLink2)
         }
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
