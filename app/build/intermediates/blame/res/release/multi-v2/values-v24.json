@@ -4,17 +4,7 @@
             "outputFile": "/home/reactivespace/Reactive Space/MontiKristolatest/MontiKristo/app/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/4be7fe5ce032c0230c50a3e2122b9fc7/res/values-v24/values-v24.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,212",
-                        "endColumns": "156,134",
-                        "endOffsets": "207,342"
-                    }
-                },
-                {
-                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/6760d460b87fda126089a1e1bfca5707/res/values-v24/values-v24.xml",
+                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/6ae9f20511700f246d95900d5958c7c4/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -28,6 +18,16 @@
                         "startOffsets": "347,413,474,540",
                         "endColumns": "65,60,65,66",
                         "endOffsets": "408,469,535,602"
+                    }
+                },
+                {
+                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/d02e1a86d9b7127021a7c27e15c39322/res/values-v24/values-v24.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,212",
+                        "endColumns": "156,134",
+                        "endOffsets": "207,342"
                     }
                 }
             ]

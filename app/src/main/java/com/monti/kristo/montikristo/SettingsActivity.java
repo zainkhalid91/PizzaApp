@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.monti.kristo.montikristo.model.LoginUserModel;
 import com.monti.kristo.montikristo.model.StatusModel;
@@ -21,6 +22,7 @@ import com.monti.kristo.montikristo.rest.apiclient;
 import com.monti.kristo.montikristo.utils.JWTUtils;
 import com.monti.kristo.montikristo.utils.SessionManager;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,6 +36,8 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        //Crashlytics
+        Fabric.with(this, new Crashlytics());
         btn_back = findViewById(R.id.btn_back_settings);
 
         btn_back.setOnClickListener(new View.OnClickListener() {

@@ -106,7 +106,6 @@ android/support/v4/graphics/drawable/IconCompat$IconType.class
 android/support/v4/media/AudioAttributesCompat$AttributeContentType.class
 android/support/v4/media/AudioAttributesCompat$AttributeUsage.class
 android/support/v4/media/MediaBrowserCompat$MediaItem$Flags.class
-android/support/v4/media/MediaBrowserServiceCompat$ResultFlags.class
 android/support/v4/media/MediaMetadataCompat$BitmapKey.class
 android/support/v4/media/MediaMetadataCompat$LongKey.class
 android/support/v4/media/MediaMetadataCompat$RatingKey.class
@@ -148,6 +147,7 @@ android/support/v7/widget/ViewBoundsCheck$ViewBounds.class
 androidx/versionedparcelable/NonParcelField.class
 androidx/versionedparcelable/ParcelField.class
 androidx/versionedparcelable/VersionedParcelize.class
+com/airbnb/lottie/LottieDrawable$RepeatMode.class
 com/bumptech/glide/annotation/Excludes.class
 com/bumptech/glide/annotation/GlideExtension.class
 com/bumptech/glide/annotation/GlideModule.class
@@ -228,6 +228,7 @@ com/mikepenz/fastadapter/utils/DefaultItemList.class
 com/mikepenz/fastadapter/utils/DefaultItemListImpl.class
 com/mikepenz/fastadapter/utils/EventHookUtil.class
 com/mikepenz/fastadapter/utils/package-info.class
+io/fabric/sdk/android/services/concurrency/DependsOn.class
 io/reactivex/Completable.class
 io/reactivex/CompletableSource.class
 io/reactivex/Flowable.class

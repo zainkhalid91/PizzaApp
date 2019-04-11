@@ -7,7 +7,11 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
+import com.crashlytics.android.Crashlytics;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -17,10 +21,13 @@ import com.monti.kristo.montikristo.utils.SessionManager;
 
 import java.util.List;
 
+import io.fabric.sdk.android.Fabric;
+
 public class SplashScreenActivity extends AppCompatActivity {
 
     private static final long TIME_LIMIT = 3000;
     SessionManager sessionManager;
+    ImageView mlogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +35,16 @@ public class SplashScreenActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
-
+        mlogo = findViewById(R.id.mlogo);
         sessionManager = new SessionManager(getApplicationContext());
+        //crashlytics
+        Fabric.with(this, new Crashlytics());
 
         //Permissions
         getRunTimePermissions();
+
+        Animation myanim = AnimationUtils.loadAnimation(this, R.anim.splash_anim);
+        mlogo.startAnimation(myanim);
 
     }
 

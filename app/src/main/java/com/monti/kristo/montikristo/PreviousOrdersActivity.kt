@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.crashlytics.android.Crashlytics
 import com.google.gson.Gson
 import com.monti.kristo.montikristo.adapters.PreviousOrderAdapter
 import com.monti.kristo.montikristo.model.CartItemsModel
@@ -20,6 +21,7 @@ import com.monti.kristo.montikristo.model.PreviousOrderModel
 import com.monti.kristo.montikristo.rest.network.ApiInterface
 import com.monti.kristo.montikristo.utils.JWTUtils
 import com.monti.kristo.montikristo.utils.SessionManager
+import io.fabric.sdk.android.Fabric
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,6 +41,9 @@ class PreviousOrdersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_previous_orders)
+
+        //Crashlytics
+        Fabric.with(this, Crashlytics())
 
         recyclerView = findViewById<View>(R.id.recycler_view_prev_order) as RecyclerView
         recyclerView!!.isNestedScrollingEnabled = false

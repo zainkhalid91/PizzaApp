@@ -72,6 +72,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyViewHold
         holder.pid = String.valueOf(itemsModel.getProductId());
         holder.badge.setNumber(itemsModel.getQuantity());
         Glide.with(mContext).load(itemsModel.getThumbnail()).into(holder.thumbnail);
+
         currentpos = position;
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +90,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyViewHold
                 notifyDataSetChanged();
             }
         });
+
     }
     public void updateQuantity(int cID, int qty, String pizzaName, int subtotal) {
 

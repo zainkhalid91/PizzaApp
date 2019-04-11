@@ -1,9 +1,7 @@
 package com.monti.kristo.montikristo;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -19,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.example.circulardialog.CDialog;
 import com.google.gson.Gson;
 import com.monti.kristo.montikristo.model.AreaModel;
@@ -40,6 +39,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,6 +63,8 @@ public class OrderDetailsActivitly extends AppCompatActivity {
     AssignedAreaModel areaListModel;
     int areaId = 0;
     PreviousOrderModel previousOrderModel;
+    PuchasedProductModel puchasedProductModel;
+
     Head head;
 
 
@@ -70,6 +72,9 @@ public class OrderDetailsActivitly extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details_activitly);
+
+        //Crashlytics
+        Fabric.with(this, new Crashlytics());
 
         myFont = Typeface.createFromAsset(this.getAssets(), "fonts/SFUIDisplay-Bold.ttf");
         myFontReg = Typeface.createFromAsset(this.getAssets(), "fonts/SFUIDisplay-Regular.ttf");
@@ -152,12 +157,14 @@ public class OrderDetailsActivitly extends AppCompatActivity {
             }
         });
 
-
         btn_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (assigned_area_spinner.getSelectedItemPosition() == 0) {
+                    Toast.makeText(getApplicationContext(), "Please select location to proceed", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 placeOrder(v, cID, gTotal, address, sTotal, cName.getText().toString());
-
             }
         });
         assigned_area_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -189,7 +196,8 @@ public class OrderDetailsActivitly extends AppCompatActivity {
                         AreaName.add(areaListModel.getArea().get(i).getName());
                     }
                     AreaName.add(0, "Select Location");
-                    assigned_area_spinner.setAdapter(new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, AreaName));
+                    assigned_area_spinner.setAdapter(new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_dropdown_item, AreaName));
+                    assigned_area_spinner.setPopupBackgroundResource(R.color.white);
 
                 }
             }
@@ -233,8 +241,8 @@ public class OrderDetailsActivitly extends AppCompatActivity {
 
 
                     if (status.equals("true")) {
-                        AlertDialog alertDialog = new AlertDialog.Builder(OrderDetailsActivitly.this).create(); //Read Update
-                        alertDialog.setTitle("Your order has been placed successfully");
+                        /*AlertDialog alertDialog = new AlertDialog.Builder(OrderDetailsActivitly.this).create(); //Read Update
+                        alertDialog.setMessage("Your order has been placed successfully");
                         // alertDialog.setMessage("Order ID: " + head.getOrderID());
 
 
@@ -248,10 +256,16 @@ public class OrderDetailsActivitly extends AppCompatActivity {
                         });
 
                         alertDialog.show();  //<-- See This!
+                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setAllCaps(false);*/
+                        Intent intent = new Intent(OrderDetailsActivitly.this, PizzaAnimation.class);
+                        startActivity(intent);
+                        finish();
+
+
 
                     } else {
 
-                        dialog.cancel();
+                        //  dialog.cancel();
                         finish();
 
                     }

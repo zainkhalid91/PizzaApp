@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.monti.kristo"
-    android:versionCode="9"
-    android:versionName="1.5" >
+    android:versionCode="11"
+    android:versionName="1.7" >
 
     <uses-sdk
         android:minSdkVersion="18"
@@ -26,6 +26,8 @@
         android:roundIcon="@mipmap/ic_launcher_monti_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="com.monti.kristo.montikristo.PizzaAnimation" />
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/logo" />
@@ -35,13 +37,15 @@
         -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-        <!-- [END fcm_default_icon] -->
+            android:resource="@color/colorAccent" /> <!-- [END fcm_default_icon] -->
         <!-- [START fcm_default_channel] -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" />
-        <!-- [END fcm_default_channel] -->
+            android:value="@string/default_notification_channel_id" /> <!-- [END fcm_default_channel] -->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="4536314a5f77be43a9e39498779ae0739c558d0a" />
+
         <activity android:name="com.monti.kristo.montikristo.SplashScreenActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,7 +68,6 @@
         <activity android:name="com.monti.kristo.montikristo.PreviousOrdersActivity" />
         <activity android:name="com.monti.kristo.montikristo.SettingsActivity" />
         <activity android:name="com.monti.kristo.montikristo.NewPasswordActivity" />
-        <activity android:name="com.monti.kristo.montikristo.AddToCart" />
         <activity android:name="com.monti.kristo.montikristo.MyCartActivity" />
 
         <service
@@ -91,16 +94,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <activity
-            android:name="com.karumi.dexter.DexterActivity"
-            android:theme="@style/Dexter.Internal.Theme.Transparent" />
-
-        <provider
-            android:name="com.squareup.picasso.PicassoProvider"
-            android:authorities="com.monti.kristo.com.squareup.picasso"
-            android:exported="false" />
-
         <service
             android:name="com.google.firebase.components.ComponentDiscoveryService"
             android:exported="false" >
@@ -171,9 +164,20 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="android.support.VERSION"
-            android:value="26.1.0" />
+
+        <activity
+            android:name="com.karumi.dexter.DexterActivity"
+            android:theme="@style/Dexter.Internal.Theme.Transparent" />
+
+        <provider
+            android:name="com.squareup.picasso.PicassoProvider"
+            android:authorities="com.monti.kristo.com.squareup.picasso"
+            android:exported="false" />
+        <provider
+            android:name="com.crashlytics.android.CrashlyticsInitProvider"
+            android:authorities="com.monti.kristo.crashlyticsinitprovider"
+            android:exported="false"
+            android:initOrder="90" />
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
@@ -26,6 +27,7 @@ import com.monti.kristo.montikristo.rest.apiclient;
 import com.monti.kristo.montikristo.utils.JWTUtils;
 import com.monti.kristo.montikristo.utils.SessionManager;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,6 +53,9 @@ public class LoginScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
+
+        //Crashlytics
+        Fabric.with(this, new Crashlytics());
 
         // below code provide full screen mode
         /*this.requestWindowFeature(Window.FEATURE_NO_TITLE);

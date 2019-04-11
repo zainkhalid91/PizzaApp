@@ -4,26 +4,7 @@
             "outputFile": "/home/reactivespace/Reactive Space/MontiKristolatest/MontiKristo/app/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-sw600dp-v13/values-sw600dp-v13.xml",
             "map": [
                 {
-                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/94cd63d04fc66fa26042ee43b4039c2a/res/values-sw600dp-v13/values-sw600dp-v13.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,10,11,12",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,115,185,256,328,386,444,553,617,680",
-                        "endLines": "2,3,4,5,6,7,9,10,11,15",
-                        "endColumns": "59,69,70,71,57,57,10,63,62,10",
-                        "endOffsets": "110,180,251,323,381,439,548,612,675,847"
-                    },
-                    "to": {
-                        "startLines": "10,11,12,13,14,15,16,18,21,22",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "611,671,741,812,884,942,1000,1109,1292,1355",
-                        "endLines": "10,11,12,13,14,15,17,18,21,25",
-                        "endColumns": "59,69,70,71,57,57,10,63,62,10",
-                        "endOffsets": "666,736,807,879,937,995,1104,1168,1350,1522"
-                    }
-                },
-                {
-                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/4be7fe5ce032c0230c50a3e2122b9fc7/res/values-sw600dp-v13/values-sw600dp-v13.xml",
+                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/d02e1a86d9b7127021a7c27e15c39322/res/values-sw600dp-v13/values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -33,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/materialdrawer-6.0.9.aar/a3a287efc45a34a14fb74f61ea357d4f/res/values-sw600dp-v13/values-sw600dp-v13.xml",
+                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/materialdrawer-6.0.9.aar/3eb55a84278cf392e6bea6cd067a16ed/res/values-sw600dp-v13/values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -50,7 +31,7 @@
                     }
                 },
                 {
-                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/materialize-1.1.2.aar/8c64412948396f4b060da82634075373/res/values-sw600dp-v13/values-sw600dp-v13.xml",
+                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/materialize-1.1.2.aar/ef628209d8bd16a27e5eea044a792216/res/values-sw600dp-v13/values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -64,6 +45,25 @@
                         "startOffsets": "1237",
                         "endColumns": "54",
                         "endOffsets": "1287"
+                    }
+                },
+                {
+                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/350b815b6872099c0a9937831c791973/res/values-sw600dp-v13/values-sw600dp-v13.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,10,11,12",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,115,185,256,328,386,444,553,617,680",
+                        "endLines": "2,3,4,5,6,7,9,10,11,15",
+                        "endColumns": "59,69,70,71,57,57,10,63,62,10",
+                        "endOffsets": "110,180,251,323,381,439,548,612,675,847"
+                    },
+                    "to": {
+                        "startLines": "10,11,12,13,14,15,16,18,21,22",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "611,671,741,812,884,942,1000,1109,1292,1355",
+                        "endLines": "10,11,12,13,14,15,17,18,21,25",
+                        "endColumns": "59,69,70,71,57,57,10,63,62,10",
+                        "endOffsets": "666,736,807,879,937,995,1104,1168,1350,1522"
                     }
                 }
             ]

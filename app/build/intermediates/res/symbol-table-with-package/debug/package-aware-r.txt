@@ -15,6 +15,8 @@ anim design_bottom_sheet_slide_in
 anim design_bottom_sheet_slide_out
 anim design_snackbar_in
 anim design_snackbar_out
+anim fade_in
+anim fade_in_slow
 anim rotate
 anim scale_from_bottom
 anim scale_from_left
@@ -32,6 +34,8 @@ anim slide_to_bottom
 anim slide_to_left
 anim slide_to_right
 anim slide_to_top
+anim splash_anim
+anim text_anim
 animator design_appbar_state_list_animator
 animator design_fab_hide_motion_spec
 animator design_fab_show_motion_spec
@@ -419,6 +423,18 @@ attr listPreferredItemPaddingLeft
 attr listPreferredItemPaddingRight
 attr logo
 attr logoDescription
+attr lottie_autoPlay
+attr lottie_colorFilter
+attr lottie_enableMergePathsForKitKatAndAbove
+attr lottie_fileName
+attr lottie_imageAssetsFolder
+attr lottie_loop
+attr lottie_progress
+attr lottie_rawRes
+attr lottie_repeatCount
+attr lottie_repeatMode
+attr lottie_scale
+attr lottie_url
 attr materialButtonStyle
 attr materialCardViewStyle
 attr material_drawer_background
@@ -1386,6 +1402,10 @@ dimen notification_top_pad
 dimen notification_top_pad_large_text
 dimen songs_count
 dimen songs_count_padding_bottom
+dimen subtitle_corner_radius
+dimen subtitle_outline_width
+dimen subtitle_shadow_offset
+dimen subtitle_shadow_radius
 dimen tool_bar_top_padding
 dimen tooltip_corner_radius
 dimen tooltip_horizontal_padding
@@ -1487,6 +1507,9 @@ drawable bt_back
 drawable btn_add
 drawable btn_edit
 drawable btn_minus
+drawable button_background_negative
+drawable button_background_positive
+drawable button_border
 drawable cancel1
 drawable checked_1
 drawable checked_2
@@ -1524,6 +1547,7 @@ drawable googleg_standard_color_18
 drawable ic_add_black_24dp
 drawable ic_arrow_back_black_24dp
 drawable ic_close_black_24dp
+drawable ic_down_arrow
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
@@ -1563,6 +1587,7 @@ drawable rounded_btn_sides
 drawable settings
 drawable share
 drawable shopping_bag
+drawable spinner_bg
 drawable splashscreen
 drawable success
 drawable terms
@@ -1573,6 +1598,9 @@ drawable usericon
 drawable warning
 drawable welcome_screen
 drawable whitebackgroundradius
+font font_family
+font sfui_display_bold
+font sfui_display_regular
 id ALT
 id CTRL
 id FUNCTION
@@ -1640,6 +1668,7 @@ id btn_sent_vemail
 id btn_signup
 id btn_signup_email
 id btn_submit
+id btn_test
 id btn_verify
 id buttonPanel
 id cancel_action
@@ -1660,6 +1689,7 @@ id content
 id contentPanel
 id content_frame
 id content_layout
+id continuebtn
 id coordinator
 id custom
 id customPanel
@@ -1676,6 +1706,7 @@ id design_navigation_view
 id dimensions
 id direct
 id disableHome
+id downarrow
 id editText_two
 id editTextfive
 id editTextfour
@@ -1738,6 +1769,7 @@ id ifRoom
 id image
 id imageButton_uploadPhoto
 id imageView3
+id include
 id info
 id info_
 id invisible
@@ -1749,7 +1781,6 @@ id largeLabel
 id layout_add_items
 id layout_address
 id layout_btn_order
-id layout_button
 id layout_email
 id layout_five
 id layout_four
@@ -1772,6 +1803,8 @@ id linearLayout3
 id linearLayout4
 id listMode
 id list_item
+id lottie_layer_name
+id lottieanimation_pizza
 id masked
 id material_drawer_account_header
 id material_drawer_account_header_background
@@ -1861,7 +1894,10 @@ id radio
 id recPreOders
 id recycler_view_prev_order
 id relalayout
+id relalayout6
 id relative_layout
+id restart
+id reverse
 id right
 id right_icon
 id right_side
@@ -1927,6 +1963,7 @@ id textPizzaQty
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
+id textView
 id textYourOrder
 id text_input_password_toggle
 id textinput_counter
@@ -2040,6 +2077,7 @@ layout activity_message
 layout activity_my_cart
 layout activity_new_password
 layout activity_order_details_activitly
+layout activity_pizza_animation
 layout activity_previous_orders
 layout activity_profile
 layout activity_register_user
@@ -2158,6 +2196,7 @@ string appbar_scrolling_view_behavior
 string bottom_sheet_behavior
 string character_counter_content_description
 string character_counter_pattern
+string com_crashlytics_android_build_id
 string common_google_play_services_enable_button
 string common_google_play_services_enable_text
 string common_google_play_services_enable_title
@@ -2192,6 +2231,7 @@ string google_api_key
 string google_app_id
 string google_crash_reporting_api_key
 string google_storage_bucket
+string hello_blank_fragment
 string hide_bottom_view_on_scroll_behavior
 string library_AndroidIconics_author
 string library_AndroidIconics_authorWebsite
@@ -2543,6 +2583,7 @@ style RtlOverlay_Widget_AppCompat_Search_DropDown_Text
 style RtlOverlay_Widget_AppCompat_SearchView_MagIcon
 style RtlUnderlay_Widget_AppCompat_ActionButton
 style RtlUnderlay_Widget_AppCompat_ActionButton_Overflow
+style SpinnerTheme
 style TextAppearance_AppCompat
 style TextAppearance_AppCompat_Body1
 style TextAppearance_AppCompat_Body2
@@ -2896,6 +2937,7 @@ styleable LinearLayoutCompat android_gravity android_orientation android_baselin
 styleable LinearLayoutCompat_Layout android_layout_gravity android_layout_width android_layout_height android_layout_weight
 styleable ListPopupWindow android_dropDownHorizontalOffset android_dropDownVerticalOffset
 styleable LoadingImageView circleCrop imageAspectRatio imageAspectRatioAdjust
+styleable LottieAnimationView lottie_autoPlay lottie_colorFilter lottie_enableMergePathsForKitKatAndAbove lottie_fileName lottie_imageAssetsFolder lottie_loop lottie_progress lottie_rawRes lottie_repeatCount lottie_repeatMode lottie_scale lottie_url
 styleable MaterialButton android_insetLeft android_insetRight android_insetTop android_insetBottom backgroundTint backgroundTintMode cornerRadius icon iconGravity iconPadding iconSize iconTint iconTintMode rippleColor strokeColor strokeWidth
 styleable MaterialCardView strokeColor strokeWidth
 styleable MaterialComponentsTheme bottomSheetDialogTheme bottomSheetStyle chipGroupStyle chipStandaloneStyle chipStyle colorAccent colorBackgroundFloating colorPrimary colorPrimaryDark colorSecondary editTextStyle floatingActionButtonStyle materialButtonStyle materialCardViewStyle navigationViewStyle scrimBackground snackbarButtonStyle tabStyle textAppearanceBody1 textAppearanceBody2 textAppearanceButton textAppearanceCaption textAppearanceHeadline1 textAppearanceHeadline2 textAppearanceHeadline3 textAppearanceHeadline4 textAppearanceHeadline5 textAppearanceHeadline6 textAppearanceOverline textAppearanceSubtitle1 textAppearanceSubtitle2 textInputStyle

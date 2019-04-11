@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_monti"
@@ -16,6 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_monti_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PizzaAnimation"></activity>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/logo" />
@@ -25,13 +26,15 @@
         -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-        <!-- [END fcm_default_icon] -->
+            android:resource="@color/colorAccent" /> <!-- [END fcm_default_icon] -->
         <!-- [START fcm_default_channel] -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" />
-        <!-- [END fcm_default_channel] -->
+            android:value="@string/default_notification_channel_id" /> <!-- [END fcm_default_channel] -->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="4536314a5f77be43a9e39498779ae0739c558d0a" />
+
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,8 +57,7 @@
         <activity android:name=".PreviousOrdersActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".NewPasswordActivity" />
-        <activity android:name=".AddToCart" />
-        <activity android:name=".MyCartActivity"></activity>
+        <activity android:name=".MyCartActivity" />
 
         <service
             android:name="com.onecode.s3.service.S3UploadService"

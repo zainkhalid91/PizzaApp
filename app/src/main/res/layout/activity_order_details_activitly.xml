@@ -292,21 +292,62 @@
                 app:layout_constraintTop_toBottomOf="@id/layout_name">
 
 
-                <Spinner
-                    android:id="@+id/spinner_location"
+                <!--  <Spinner
+
+                      android:layout_width="match_parent"
+                      android:layout_height="50dp"
+
+                      android:spinnerMode="dropdown" />-->
+
+                <RelativeLayout
+                    android:id="@+id/relalayout6"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginBottom="16dp"
-                    android:spinnerMode="dropdown" />
+                    android:layout_weight=".28"
+                    android:background="@drawable/spinner_bg"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/spinner_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="6dp"
+                        android:layout_toLeftOf="@id/downarrow"
+                        android:background="@color/md_grey_800" />
+
+                    <ImageView
+                        android:id="@+id/downarrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_down_arrow" />
+
+                </RelativeLayout>
 
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@id/spinner_location"
+                    android:layout_below="@id/relalayout6"
                     android:background="#c0c0c0" />
             </RelativeLayout>
 
@@ -314,8 +355,8 @@
                 android:id="@+id/layout_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginRight="16dp"
+                android:orientation="horizontal"
 
                 app:layout_constraintTop_toBottomOf="@id/relalayout">
 
@@ -342,10 +383,10 @@
                     android:layout_below="@id/head_address"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:padding="10dp"
                     android:layout_marginRight="8dp"
-                    android:text=""
                     android:background="@null"
+                    android:padding="10dp"
+                    android:text=""
                     android:textColor="@color/colorBlack"
                     android:textSize="18sp" />
 

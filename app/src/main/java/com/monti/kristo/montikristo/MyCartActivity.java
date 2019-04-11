@@ -10,13 +10,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.flaviofaria.kenburnsview.Transition;
 import com.google.gson.Gson;
@@ -30,7 +30,6 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.monti.kristo.montikristo.adapters.MyCartAdapter;
-import com.monti.kristo.montikristo.helpermethod.RecyclerItemTouchHelper;
 import com.monti.kristo.montikristo.interfaces.BalanceChangeListner;
 import com.monti.kristo.montikristo.model.BalanceModel;
 import com.monti.kristo.montikristo.model.CartItemsModel;
@@ -39,7 +38,6 @@ import com.monti.kristo.montikristo.model.ItemsModel;
 import com.monti.kristo.montikristo.model.LoginUserModel;
 import com.monti.kristo.montikristo.model.PuchasedProductModel;
 import com.monti.kristo.montikristo.model.StatusItemModel;
-import com.monti.kristo.montikristo.model.StatusModel;
 import com.monti.kristo.montikristo.rest.apiclient;
 import com.monti.kristo.montikristo.utils.JWTUtils;
 import com.monti.kristo.montikristo.utils.SessionManager;
@@ -47,15 +45,16 @@ import com.monti.kristo.montikristo.utils.SessionManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.monti.kristo.montikristo.utils.Constants.KEY_ORDER_DETAILS;
 
-public class MyCartActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, BalanceChangeListner {
+public class MyCartActivity extends AppCompatActivity implements BalanceChangeListner {
 
-    public Button btn_back, confirmOrder, btnAdd, btnSub;
+    public Button btn_back, confirmOrder, btnAdd, btnSub, testbtn;
     public TextView subTotal, delivery, pizzaTitle, pizzaPrice, pizzaQty, stapperQty, pizzaIngredientsHearder, pizzaNameHeaderTitle;
     public TextView grandTotal;
     public int selectedPostion = 0;
@@ -77,6 +76,8 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
         setContentView(R.layout.activity_my_cart);
         toolbar();
         setUpNavigationDrawer();
+        //Crashlytics
+        Fabric.with(this, new Crashlytics());
 
         recyclerView = findViewById(R.id.recycler_view_prev_order);
         btn_back = findViewById(R.id.btn_back_prevOrder);
@@ -84,13 +85,8 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
         imageViewHeader = findViewById(R.id.header);
         grandTotalModel = new GrandTotalModel();
 
-        /*Scroll view touch objects*//*
-        layoutScrollView = (ScrollView) findViewById(R.id.layoutScroll);
-        recylerScrollView = (ScrollView) findViewById(R.id.recyclerLayer);*/
-
-
         ConstraintLayout constraintLayout = findViewById(R.id.constraint_layout);
-
+        testbtn = findViewById(R.id.btn_test);
         subTotal = findViewById(R.id.sub_total_amnt);
         delivery = findViewById(R.id.delivery_amnt);
         grandTotal = findViewById(R.id.total_amnt);
@@ -113,25 +109,6 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
 
         sessionManager = new SessionManager(getApplicationContext());
 
-        /*layoutScrollView.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View v, MotionEvent event) {
-                findViewById(R.id.recyclerLayer).getParent().requestDisallowInterceptTouchEvent(false);
-                return false;
-            }
-        });
-
-
-        recylerScrollView.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                // Disallow the touch request for parent scroll on touch of child view
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });*/
-
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -140,16 +117,6 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
 
         }
 
-       /* btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
-        });*/
 
         confirmOrder.setOnClickListener(v -> sendToOrderDetails());
 
@@ -160,22 +127,6 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-        /*recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                selectedPostion = position;
-                updateView();
-               // adapter.setBackground0(position);
-                if (itemsModelList.get(position).getQuantity() == 0) {
-                    grandTotal.setText("PKR 0.0");
-                }
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-            }
-        }));*/
 
         imageViewHeader.setTransitionListener(new KenBurnsView.TransitionListener() {
             @Override
@@ -189,9 +140,11 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
             }
         });
 
+        testbtn.setOnClickListener(v -> {
+            Intent testintent = new Intent(MyCartActivity.this, PizzaAnimation.class);
+            startActivity(testintent);
+        });
 
-        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
-        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
 
         btnAdd.setOnClickListener(v -> {
             try {
@@ -281,7 +234,7 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
                         new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_cart)).withIcon(R.drawable.shopping_bag).withIdentifier(0),
                         new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_profile)).withIcon(R.drawable.profile).withIdentifier(1),
                         new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_contact)).withIcon(R.drawable.contact_us).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_settings)).withIcon(R.drawable.settings).withIdentifier(3),
+                        // new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_settings)).withIcon(R.drawable.settings).withIdentifier(3),
 
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName(getResources().getString(R.string.nav_item_rateus)).withIcon(R.drawable.rate_us).withIdentifier(4),
@@ -312,12 +265,12 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
                             startActivity(chat);
 
                         }
-                        if (drawerItem.getIdentifier() == 3) {
+                     /*   if (drawerItem.getIdentifier() == 3) {
                             Intent settings;
                             settings = new Intent(MyCartActivity.this, SettingsActivity.class);
                             settings.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(settings);
-                        }
+                        }*/
                         if (drawerItem.getIdentifier() == 4) {
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.monti.kristo")));
                         }
@@ -442,6 +395,11 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
 
     public void sendToOrderDetails() {
         try {
+            for (int i = 0; i < puchasedProductModel.getCartItemsModels().size(); i++) {
+                if (puchasedProductModel.getCartItemsModels().get(i).getQuantity() == 0) {
+                    puchasedProductModel.getCartItemsModels().remove(i);
+                }
+            }
             if (puchasedProductModel.getBalanceModel().getGrandTotal() > 0) {
                 Intent intent = new Intent(getApplicationContext(), OrderDetailsActivitly.class);
                 intent.putExtra(KEY_ORDER_DETAILS, puchasedProductModel);
@@ -451,8 +409,6 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
                 TextView v = toast.getView().findViewById(android.R.id.message);
                 if (v != null) v.setGravity(Gravity.CENTER_HORIZONTAL);
                 toast.show();
-
-                //  Toast.makeText(getApplicationContext(), "Please select your cart item before proceeding .", Toast.LENGTH_LONG).show();
 
             }
         } catch (Exception ex) {
@@ -465,12 +421,6 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
      * Adding few items for testing
      */
     private void prepareList() {
-
-    /*    progressDialog = new ProgressDialog(getApplicationContext());
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(getString(R.string.progressdialog_processing));
-        progressDialog.show();*/
-
         Call<StatusItemModel> call = apiclient
                 .getApiClientInstance()
                 .getApi()
@@ -517,7 +467,7 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
                 //     mSwipeRefreshLayout.setRefreshing(false);
                 // progressDialog.cancel();
 
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Please check your internet connection.", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -528,83 +478,6 @@ public class MyCartActivity extends AppCompatActivity implements RecyclerItemTou
         super.onBackPressed();
     }
 
-    @Override
-    public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction, int position) {
-        if (viewHolder instanceof MyCartAdapter.MyViewHolder) {
-
-            String title = (String) ((MyCartAdapter.MyViewHolder) viewHolder).title.getText();
-
-            // remove the item from recycler view
-            adapter.removeItem(viewHolder.getAdapterPosition());
-
-            Call<StatusModel> call = apiclient
-                    .getApiClientInstance()
-                    .getApi()
-                    .removeFromCart(title, cid);
-
-            call.enqueue(new Callback<StatusModel>() {
-                @Override
-                public void onResponse(Call<StatusModel> call, Response<StatusModel> response) {
-
-                    if (response.isSuccessful()) {
-                        //    mSwipeRefreshLayout.setRefreshing(false);
-
-                        // progressDialog.cancel();
-                        StatusModel resp = response.body();
-                        String status = resp.getStatus();
-
-
-                        if (status.equals(true)) {
-
-                            Toast.makeText(getApplicationContext(), "" + resp.getMsg(), Toast.LENGTH_LONG).show();
-
-
-                        } else {
-                            //   mSwipeRefreshLayout.setRefreshing(false);
-                            // progressDialog.cancel();
-
-                            Toast.makeText(getApplicationContext(), "" + resp.getMsg(), Toast.LENGTH_LONG).show();
-
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<StatusModel> call, Throwable t) {
-                    //     mSwipeRefreshLayout.setRefreshing(false);
-                    //   progressDialog.cancel();
-
-                    Toast.makeText(getApplicationContext(), "Server not responding", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-
-            //deleteItem();
-
-            // get the removed item name to display it in snack bar
-            //String name = cartItemsModelList.get(viewHolder.getAdapterPosition()).getProductName();
-
-            // backup of removed item for undo purpose
-            // final CartItemsModel deletedItem = cartItemsModelList.get(viewHolder.getAdapterPosition());
-            // final int deletedIndex = viewHolder.getAdapterPosition();
-
-
-            // showing snack bar with Undo option
-            /*Snackbar snackbar = Snackbar
-                    .make(constraintLayout, name + " removed from cart!", Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    // undo is selected, restore the deleted item
-                    adapter.restoreItem(deletedItem, deletedIndex);
-                }
-            });
-            snackbar.setActionTextColor(Color.YELLOW);
-            snackbar.show();*/
-        }
-    }
 
     @Override
     public void upDateBalance(BalanceModel balanceModel) {
