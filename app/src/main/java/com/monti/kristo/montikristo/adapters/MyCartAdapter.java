@@ -1,8 +1,8 @@
 package com.monti.kristo.montikristo.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +38,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyViewHold
     int deliveryFee = 0;
     View itemView;
     private Context mContext;
-    private ArrayList<ItemsModel> itemsModelList;
+     public static ArrayList<ItemsModel> itemsModelList;
     private BalanceChangeListner balanceChangeListner;
     private BalanceModel balanceModel;
     int selectedPosition = -1;
@@ -75,20 +75,17 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyViewHold
 
         currentpos = position;
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentpos = position;
-                if (itemsModelList.get(position).getQuantity() == 0) {
-                    ((MyCartActivity) mContext).grandTotal.setText("PKR 0.0");
-                }
-                ((MyCartActivity) mContext).selectedPostion = position;
-                if (mContext instanceof MyCartActivity) {
-                    ((MyCartActivity) mContext).updateView();
-                }
-                selectedPosition = position;
-                notifyDataSetChanged();
+        holder.cardView.setOnClickListener(v -> {
+            currentpos = position;
+            if (itemsModelList.get(position).getQuantity() == 0) {
+                ((MyCartActivity) mContext).grandTotal.setText("PKR 0.0");
             }
+            ((MyCartActivity) mContext).selectedPostion = position;
+            if (mContext instanceof MyCartActivity) {
+                ((MyCartActivity) mContext).updateView();
+            }
+            selectedPosition = position;
+            notifyDataSetChanged();
         });
 
     }
@@ -98,7 +95,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.MyViewHold
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         final String formattedDate = df.format(c);
 
-        Call<StatusModel> call = apiclient
+        Call<StatusModel> call = apiclient.Companion
                 .getApiClientInstance()
                 .getApi()
                 .addToCart(cID, subtotal, formattedDate, pizzaName, qty);

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/reactivespace/Reactive Space/MontiKristolatest/MontiKristo/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-large-v4/values-large-v4.xml",
+            "outputFile": "D:\\Projects\\MontiKristolatest\\MontiKristo\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-large-v4\\values-large-v4.xml",
             "map": [
                 {
-                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/d02e1a86d9b7127021a7c27e15c39322/res/values-large-v4/values-large-v4.xml",
+                    "source": "C:\\Users\\Zain Ali Khalid\\.gradle\\caches\\transforms-2\\files-2.1\\6a17577f7c7a509d91313604cdcfd723\\res\\values-large-v4\\values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/350b815b6872099c0a9937831c791973/res/values-large-v4/values-large-v4.xml",
+                    "source": "C:\\Users\\Zain Ali Khalid\\.gradle\\caches\\transforms-2\\files-2.1\\185ed04756ff89a7e4eab374ca51bd7c\\res\\values-large-v4\\values-large-v4.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",

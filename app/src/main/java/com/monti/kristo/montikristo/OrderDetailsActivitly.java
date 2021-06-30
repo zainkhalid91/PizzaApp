@@ -7,18 +7,23 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.example.circulardialog.CDialog;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.monti.kristo.montikristo.model.AreaModel;
 import com.monti.kristo.montikristo.model.AssignedAreaModel;
@@ -28,7 +33,9 @@ import com.monti.kristo.montikristo.model.LoginUserModel;
 import com.monti.kristo.montikristo.model.PreviousOrderModel;
 import com.monti.kristo.montikristo.model.PuchasedProductModel;
 import com.monti.kristo.montikristo.model.StatusModel;
+import com.monti.kristo.montikristo.model.ValidatePromoModel;
 import com.monti.kristo.montikristo.rest.apiclient;
+import com.monti.kristo.montikristo.rest.network.ApiInterface;
 import com.monti.kristo.montikristo.utils.Constants;
 import com.monti.kristo.montikristo.utils.JWTUtils;
 import com.monti.kristo.montikristo.utils.SessionManager;
@@ -39,6 +46,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,9 +55,10 @@ import retrofit2.Response;
 
 public class OrderDetailsActivitly extends AppCompatActivity {
 
-    Button btn_back, btn_order;
-    TextView subTotal, deliveryFee, total, cName, cMobile;
-    EditText cAddresss;
+    Button btn_order;
+    ImageView btn_back;
+    TextView subTotal, deliveryFee, total, cName, cMobile, validate_textview, discount_amount_tv;
+    EditText cAddresss, edittxt_promo;
     TextView label, head1, head2, subTotalHead, deliverFeeHead, totalHead, nameHead, addressHead, mobileHead;
     int price, fee, userID, priceWithFee, netAmount, discount = 100;
     ProgressDialog dialog;
@@ -58,14 +68,16 @@ public class OrderDetailsActivitly extends AppCompatActivity {
     Spinner assigned_area_spinner;
     CDialog cDialog;
     int cID = 0;
-    double gTotal = 0;
+   // double gTotal = 0;
     double sTotal = 0;
     AssignedAreaModel areaListModel;
+    ConstraintLayout order_detail_layout;
     int areaId = 0;
     PreviousOrderModel previousOrderModel;
     PuchasedProductModel puchasedProductModel;
-
+    ValidatePromoModel validatePromoModel;
     Head head;
+    RelativeLayout layout_promo;
 
 
     @Override
@@ -85,10 +97,11 @@ public class OrderDetailsActivitly extends AppCompatActivity {
 
         balanceModel = productModel.getBalanceModel();
 
-        gTotal = balanceModel.getGrandTotal();
+
+
         sTotal = balanceModel.getSubTotal();
 
-        subTotal = findViewById(R.id.sub_total_amnt);
+        subTotal = findViewById(R.id.deals_sub_total_amnt);
         deliveryFee = findViewById(R.id.delivery_amnt);
         total = findViewById(R.id.total_amnt);
         cName = findViewById(R.id.txt_name);
@@ -113,8 +126,14 @@ public class OrderDetailsActivitly extends AppCompatActivity {
         head2 = findViewById(R.id.head_order_details);
         head2.setTypeface(myFontReg);
         label = findViewById(R.id.textview_label);
+        edittxt_promo = findViewById(R.id.edittxt_promo);
+        validate_textview = findViewById(R.id.validate_textview);
+        discount_amount_tv = findViewById(R.id.discount_amount_tv);
+        layout_promo = findViewById(R.id.layout_promo);
+
         label.setTypeface(myFontReg);
 
+        order_detail_layout = findViewById(R.id.order_detail_layout);
 
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         String decoded = null;
@@ -143,29 +162,66 @@ public class OrderDetailsActivitly extends AppCompatActivity {
         deliveryFee.setText("PKR " + balanceModel.getDelieveryFee());
         deliveryFee.setTypeface(myFontReg);
 
-        total.setText("PKR " + balanceModel.getGrandTotal());
+        total.setText(String.valueOf(balanceModel.getGrandTotal()));
         total.setTypeface(myFontReg);
 
         userID = loginUserModel.getId();
 
 
         btn_back = findViewById(R.id.btn_back_odetail);
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        btn_back.setOnClickListener(v -> finish());
 
-        btn_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (assigned_area_spinner.getSelectedItemPosition() == 0) {
-                    Toast.makeText(getApplicationContext(), "Please select location to proceed", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                placeOrder(v, cID, gTotal, address, sTotal, cName.getText().toString());
+        for (int i = 0; i< productModel.getCartItemsModels().size(); i++){
+            if (productModel.getCartItemsModels().get(i).getType().equals("deal")){
+               edittxt_promo.setEnabled(false);
+               validate_textview.setEnabled(false);
+               validate_textview.setTextColor(getResources().getColor(R.color.md_blue_grey_200));
+               break;
             }
+        }
+
+
+        validate_textview.setOnClickListener(v -> apiclient.Companion.getApiClientInstance().getApi().validatePromo(areaId, edittxt_promo.getText().toString()).enqueue(new Callback<ValidatePromoModel>() {
+            @Override
+            public void onResponse(Call<ValidatePromoModel> call, Response<ValidatePromoModel> response) {
+                if (response.isSuccessful()) {
+                    validatePromoModel = response.body();
+                    if (!validatePromoModel.getStatus()) {
+                        Snackbar.make(order_detail_layout, "Promo code you entered in not valid.", Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        validate_textview.setText("Promo Valid");
+                        validate_textview.setEnabled(false);
+                        validate_textview.setTextColor(getResources().getColor(R.color.md_green_600));
+                        Snackbar.make(order_detail_layout, "Promo code added successfully.", Snackbar.LENGTH_SHORT).show();
+                        discount();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ValidatePromoModel> call, Throwable t) {
+
+            }
+        }));
+
+
+        btn_order.setOnClickListener(v -> {
+            if (assigned_area_spinner.getSelectedItemPosition() == 0) {
+                Snackbar.make(order_detail_layout, "Please select location to proceed.", Snackbar.LENGTH_SHORT)
+                        .show();
+                return;
+            }
+            if (cAddresss.getText().toString().isEmpty()) {
+                cAddresss.setError("Please enter your address to proceed");
+                //Snackbar.make(order_detail_layout, "Please enter your address to proceed", Snackbar.LENGTH_LONG).show();
+                return;
+            }
+            if (cName.getText().toString().isEmpty()) {
+//                cName.setError("Please enter your name first.");
+                Snackbar.make(order_detail_layout, "Please enter your full name in profile section to proceed.", Snackbar.LENGTH_LONG).show();
+                return;
+            }
+            placeOrder(v, cID, balanceModel.getGrandTotal(), cAddresss.getText().toString(), sTotal, cName.getText().toString());
         });
         assigned_area_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -186,7 +242,7 @@ public class OrderDetailsActivitly extends AppCompatActivity {
             }
         });
 
-        apiclient.getApiClientInstance().getApi().assignedAreas().enqueue(new Callback<AssignedAreaModel>() {
+        apiclient.Companion.getApiClientInstance().getApi().assignedAreas().enqueue(new Callback<AssignedAreaModel>() {
             @Override
             public void onResponse(Call<AssignedAreaModel> call, Response<AssignedAreaModel> response) {
                 if (response.isSuccessful()) {
@@ -224,8 +280,9 @@ public class OrderDetailsActivitly extends AppCompatActivity {
 
             Gson gson = new Gson();
             String products = gson.toJson(productModel.getCartItemsModels());
-            //Toast.makeText(getApplicationContext(), "Order Placed Sucessfully", Toast.LENGTH_LONG).show();
-            Call<StatusModel> call = apiclient
+
+
+            Call<StatusModel> call = apiclient.Companion
                     .getApiClientInstance()
                     .getApi()
                     .placeOrder(id, name, gTotal, address, gTotal, c.getTime(), formattedDate, products, areaId, cMobile.getText().toString());
@@ -233,38 +290,21 @@ public class OrderDetailsActivitly extends AppCompatActivity {
             call.enqueue(new Callback<StatusModel>() {
                 @Override
                 public void onResponse(Call<StatusModel> call, Response<StatusModel> response) {
-
                     dialog.cancel();
                     StatusModel resp = response.body();
                     String status = resp.getStatus();
                     String msg = resp.getMsg();
-
+                   /* if (!edittxt_promo.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Promo code added successfully and is being verified.", Toast.LENGTH_LONG).show();
+                    }
+*/
 
                     if (status.equals("true")) {
-                        /*AlertDialog alertDialog = new AlertDialog.Builder(OrderDetailsActivitly.this).create(); //Read Update
-                        alertDialog.setMessage("Your order has been placed successfully");
-                        // alertDialog.setMessage("Order ID: " + head.getOrderID());
-
-
-                        alertDialog.setButton("Continue", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent;
-                                intent = new Intent(getApplicationContext(), MyCartActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                            }
-                        });
-
-                        alertDialog.show();  //<-- See This!
-                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setAllCaps(false);*/
                         Intent intent = new Intent(OrderDetailsActivitly.this, PizzaAnimation.class);
+                        //MyCartActivity.getInstance().finish();
                         startActivity(intent);
                         finish();
-
-
-
                     } else {
-
                         //  dialog.cancel();
                         finish();
 
@@ -274,17 +314,35 @@ public class OrderDetailsActivitly extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<StatusModel> call, Throwable t) {
                     dialog.cancel();
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(order_detail_layout, "Error reaching server.", Snackbar.LENGTH_SHORT)
+                            .show();
                 }
             });
 
 
         } else {
 
-            Toast.makeText(getApplicationContext(), "No internet connection available", Toast.LENGTH_LONG).show();
+            Snackbar.make(order_detail_layout, "No internet connection available", Snackbar.LENGTH_SHORT)
+                    .show();
 
         }
     }
+
+    private void discount() {
+        Double totalamount = Double.valueOf(validatePromoModel.getData().getDiscount_value());
+        Double total_ = Double.parseDouble(total.getText().toString());
+        Double total_t = Double.parseDouble(total.getText().toString());
+        discount_amount_tv.setTextColor(getResources().getColor(R.color.md_red_700));
+        if (validatePromoModel.getData().getDiscount_type().equals("fixedvalue")) {
+            discount_amount_tv.setText(String.format("PKR %s",(total_ - totalamount)));
+        } else {
+            total_ =- (total_ * totalamount) / 100;
+            discount_amount_tv.setText(String.format("PKR %s" , total_));
+        }
+        total.setText(String.format("PKR %s",(total_ + total_t)));
+        balanceModel.setGrandTotal(total_ + total_t);
+    }
+
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager

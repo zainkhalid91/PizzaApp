@@ -2,15 +2,16 @@ package com.monti.kristo.montikristo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MessageActivity extends AppCompatActivity {
 
     TextView done;
-    Button btn_back;
+    ImageView btn_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

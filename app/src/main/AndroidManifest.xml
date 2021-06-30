@@ -4,9 +4,6 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_monti_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PizzaAnimation"></activity>
+        <activity android:name=".utils.DealsActvitiy"></activity>
+        <activity android:name=".PizzaAnimation" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -51,7 +49,8 @@
         <activity android:name=".MessageActivity" />
         <activity
             android:name=".OrderDetailsActivitly"
-            android:windowSoftInputMode="stateHidden" />
+            android:noHistory="true"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".PreviousOrdersActivity" />
@@ -62,14 +61,11 @@
         <service
             android:name="com.onecode.s3.service.S3UploadService"
             android:exported="false" />
-        <service android:name=".route.MyFireBaseMessagingService">
+        <service
+            android:name=".route.MyFireBaseMessagingService"
+            android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        <service android:name=".route.FirebaseIDService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
     </application>

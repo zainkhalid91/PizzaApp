@@ -7,18 +7,23 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.monti.kristo.montikristo.model.LoginUserModel;
 import com.monti.kristo.montikristo.model.PushNotificatonsModel;
@@ -34,7 +39,8 @@ import retrofit2.Response;
 
 public class LoginScreenActivity extends AppCompatActivity {
 
-    Button btn_login, btn_back;
+    Button btn_login;
+    ImageView btn_back;
     TextView register, forgotPass, head1, head2, headSub;
     TextView txt_email, txt_pass, errortext;
     ProgressDialog dialog;
@@ -45,8 +51,16 @@ public class LoginScreenActivity extends AppCompatActivity {
     Boolean status;
     String token;
 
-    public static String getFirebaseToken() {
-        return FirebaseInstanceId.getInstance().getToken();
+    public String getFirebaseToken() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( LoginScreenActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String newToken = instanceIdResult.getToken();
+                Log.e("newToken",newToken);
+
+            }
+        });
+        return FirebaseInstanceId.getInstance().getId();
     }
 
     @Override
@@ -57,9 +71,7 @@ public class LoginScreenActivity extends AppCompatActivity {
         //Crashlytics
         Fabric.with(this, new Crashlytics());
 
-        // below code provide full screen mode
-        /*this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
+
 
         setContentView(R.layout.activity_login_screen);
 
@@ -83,43 +95,29 @@ public class LoginScreenActivity extends AppCompatActivity {
         head1.setTypeface(myFont);
         head2.setTypeface(myFontReg);
 
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(getApplicationContext(), WelcomeScreenActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
+        btn_back.setOnClickListener(v -> {
+            Intent intent;
+            intent = new Intent(getApplicationContext(), WelcomeScreenActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         });
 
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
+        register.setOnClickListener(v -> {
+            Intent intent;
+            intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         });
-        forgotPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
+        forgotPass.setOnClickListener(v -> {
+            Intent intent;
+            intent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         });
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginUser(v);
-            }
-        });
+        btn_login.setOnClickListener(v -> LoginUser(v));
 
     }
 
@@ -162,7 +160,7 @@ public class LoginScreenActivity extends AppCompatActivity {
 
             dialog.show();
 
-            Call<StatusTokenModel> call = apiclient
+            Call<StatusTokenModel> call = apiclient.Companion
                     .getApiClientInstance()
                     .getApi()
                     .loginUser(Email, Password);
@@ -231,7 +229,7 @@ public class LoginScreenActivity extends AppCompatActivity {
         Gson gson = new Gson();
         LoginUserModel userModel = gson.fromJson(decoded, LoginUserModel.class);
         cID = userModel.getId();
-        Call<PushNotificatonsModel> call = apiclient
+        Call<PushNotificatonsModel> call = apiclient.Companion
                 .getApiClientInstance()
                 .getApi()
                 .pushNotifications(getFirebaseToken(), String.valueOf(cID));
@@ -269,12 +267,11 @@ public class LoginScreenActivity extends AppCompatActivity {
             public void onFailure(Call<PushNotificatonsModel> call, Throwable t) {
 
             }
-
-
         });
 
 
     }
+
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager

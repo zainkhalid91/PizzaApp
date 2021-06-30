@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/reactivespace/Reactive Space/MontiKristolatest/MontiKristo/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v11/values-v11.xml",
+            "outputFile": "D:\\Projects\\MontiKristolatest\\MontiKristo\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v11\\values-v11.xml",
             "map": [
                 {
-                    "source": "/home/reactivespace/.gradle/caches/transforms-1/files-1.1/materialize-1.1.2.aar/ef628209d8bd16a27e5eea044a792216/res/values-v11/values-v11.xml",
+                    "source": "C:\\Users\\Zain Ali Khalid\\.gradle\\caches\\transforms-2\\files-2.1\\be86cf31e8df8c104a7493fda04f14b2\\res\\values-v11\\values-v11.xml",
                     "from": {
                         "startLines": "2,8,12,17,23,27,36,41,45,49",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",

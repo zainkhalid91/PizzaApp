@@ -4,11 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,8 @@ import retrofit2.Response;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
-    Button sendCode, btn_back;
+    Button sendCode;
+    ImageView btn_back;
     EditText vEmail;
     ProgressDialog progressDialog;
     Typeface myFont, myFontReg;
@@ -95,7 +97,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         progressDialog.show();
 
-        Call<StatusModel> call = apiclient
+        Call<StatusModel> call = apiclient.Companion
                 .getApiClientInstance()
                 .getApi()
                 .forgotPassword(email);
@@ -111,6 +113,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
 
                 if (status.equals("true")) {
+
                     Toast.makeText(getApplicationContext(), "Please check your email", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(), EmailCheckActivity.class);
                     intent.putExtra("email", email);

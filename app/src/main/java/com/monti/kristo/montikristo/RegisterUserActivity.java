@@ -7,18 +7,22 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.material.snackbar.Snackbar;
 import com.monti.kristo.montikristo.model.StatusModel;
 import com.monti.kristo.montikristo.rest.apiclient;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,12 +30,14 @@ import retrofit2.Response;
 
 public class RegisterUserActivity extends AppCompatActivity {
 
-    Button btn_back, reg_btn;
+    Button  reg_btn;
+    ImageView btn_back;
     TextView login, head1, head2, headSub;
     EditText txt_name, txt_email, txt_contact, txt_address, txt_pass;
     TextView txt_error;
     ProgressDialog dialog;
     Typeface myFont, myFontReg;
+    ConstraintLayout register_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,8 @@ public class RegisterUserActivity extends AppCompatActivity {
         txt_pass = findViewById(R.id.edittext_pass);
         txt_error = findViewById(R.id.textview_errormsg);
 
+        register_layout = findViewById(R.id.register_layout);
+
         head1 = findViewById(R.id.header1);
         head2 = findViewById(R.id.header_);
         headSub = findViewById(R.id.header2);
@@ -71,26 +79,23 @@ public class RegisterUserActivity extends AppCompatActivity {
 
         btn_back = findViewById(R.id.btn_back_reg);
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(getApplicationContext(), LoginScreenActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
+        login.setOnClickListener(v -> {
+            Intent intent;
+            intent = new Intent(getApplicationContext(), LoginScreenActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         });
 
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(getApplicationContext(), LoginScreenActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
+        btn_back.setOnClickListener(v -> {
+            Intent intent;
+            intent = new Intent(getApplicationContext(), LoginScreenActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         });
+
+
+
     }
 
     private void registerUser(View v) {
@@ -129,7 +134,7 @@ public class RegisterUserActivity extends AppCompatActivity {
             return;
         }
         if (password.length() < 8) {
-            txt_pass.setError("Password should be atleast 8 character long");
+            txt_pass.setError("Password should be at least 8 character long");
             txt_pass.requestFocus();
             return;
         }
@@ -148,7 +153,7 @@ public class RegisterUserActivity extends AppCompatActivity {
 
             dialog.show();
 
-            Call<StatusModel> call = apiclient
+            Call<StatusModel> call = apiclient.Companion
                     .getApiClientInstance()
                     .getApi()
                     .createUser(name, contact, email, password, address, source, roleId);
@@ -169,7 +174,8 @@ public class RegisterUserActivity extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
-                        Toast.makeText(getApplicationContext(), "Registered Sucessfully, Please Sign In", Toast.LENGTH_SHORT).show();
+                       Toast.makeText(getApplicationContext(),"Registered Sucessfully, Please Sign In", Toast.LENGTH_LONG).show();
+                        //Snackbar.make(register_layout, "Registered Sucessfully, Please Sign In", Snackbar.LENGTH_LONG).show();
 
 
                         //clear all fields
@@ -182,7 +188,9 @@ public class RegisterUserActivity extends AppCompatActivity {
                     } else {
 
                         dialog.cancel();
-                        Toast.makeText(getApplicationContext(), "Try again.", Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getApplicationContext(), "Try again.", Toast.LENGTH_LONG).show();
+                        Snackbar.make(register_layout, "Try again", Snackbar.LENGTH_LONG).show();
+
                         Intent intent;
                         intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -195,14 +203,18 @@ public class RegisterUserActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<StatusModel> call, Throwable t) {
                     dialog.cancel();
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(register_layout, "Server not responding", Snackbar.LENGTH_LONG).show();
+
                 }
             });
 
 
         } else {
 
-            Toast.makeText(getApplicationContext(), "No internet connection available", Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(), "No internet connection available", Toast.LENGTH_LONG).show();
+            Snackbar.make(register_layout, "No internet connection available", Snackbar.LENGTH_LONG).show();
+
 
         }
     }
@@ -213,4 +225,6 @@ public class RegisterUserActivity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
+
 }

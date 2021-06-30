@@ -2,12 +2,13 @@ package com.monti.kristo.montikristo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class ChatActivity extends AppCompatActivity {
 
-    Button btn_back;
+    ImageView btn_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

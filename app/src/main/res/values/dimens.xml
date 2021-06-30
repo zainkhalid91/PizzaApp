@@ -8,5 +8,8 @@
     <dimen name="songs_count">12dp</dimen>
     <dimen name="badge_text_size">8sp</dimen>
 
+    <dimen name="button_radius">22dp</dimen>
+    <dimen name="button_height">60dp</dimen>
+
 
 </resources>

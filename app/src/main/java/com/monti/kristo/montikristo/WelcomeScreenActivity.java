@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,17 +32,17 @@ public class WelcomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome_screen);
         //Crashlytics
         Fabric.with(this, new Crashlytics());
-        myFont = Typeface.createFromAsset(this.getAssets(), "fonts/SFUIDisplay-Bold.ttf");
+       // myFont = Typeface.createFromAsset(this.getAssets(), "fonts/SFUIDisplay-Bold.ttf");
 
 
         infoMain = findViewById(R.id.info);
         subInfo = findViewById(R.id.info_);
         signup_btn = findViewById(R.id.btn_signup);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             infoMain.setTypeface(myFont);
             subInfo.setTypeface(myFont);
-        }
+        }*/
 
         btn_login_email = findViewById(R.id.btn_signup_email);
         btn_login_email.setOnClickListener(new View.OnClickListener() {

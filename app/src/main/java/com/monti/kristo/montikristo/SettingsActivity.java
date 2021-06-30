@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -112,7 +112,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             //          progressDialog.show();
 
-            Call<StatusModel> call = apiclient
+            Call<StatusModel> call = apiclient.Companion
                     .getApiClientInstance()
                     .getApi()
                     .forgotPassword(email);

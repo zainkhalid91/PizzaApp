@@ -4,12 +4,14 @@ import java.io.Serializable;
 
 public class ItemsModel implements Serializable {
 
-    private int productId;
-    private String name;
     private int price;
     private String picurl;
-    private int productDiscount;
-    private int Deliverfee;
+
+   private String toppingPrice;
+   private int productDiscount;
+    private int productId;
+    private String name;
+    private int deliverfee;
     private int quantity;
     private double subTotal = 0;
     private String Type;
@@ -97,10 +99,18 @@ public class ItemsModel implements Serializable {
     }
 
     public int getDeliverfee() {
-        return Deliverfee;
+        return deliverfee;
     }
 
     public void setDeliverfee(int deliverfee) {
-        Deliverfee = deliverfee;
+        this.deliverfee = deliverfee;
+    }
+
+    public String getToppingPrice() {
+        return toppingPrice;
+    }
+
+    public void setToppingPrice(String toppingPrice) {
+        this.toppingPrice = toppingPrice;
     }
 }

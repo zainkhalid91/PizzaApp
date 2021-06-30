@@ -2,16 +2,17 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/actvitiy_profile_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -21,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <Button
+            <ImageView
                 android:id="@+id/btn_back_prof"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -56,25 +57,26 @@
                 android:gravity="center"
                 android:text="Done"
                 android:textSize="18sp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/toolbar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
 
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             android:orientation="vertical"
 
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-            <RelativeLayout
+          <!--  <RelativeLayout
                 android:id="@+id/layout_picture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,7 +89,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="16dp"
                     android:background="@drawable/ic_user"
-                    app:civ_border_color="@color/colorBlack"
+                    app:civ_border_color="@color/md_grey_800"
                     app:civ_border_width="2dp" />
 
                 <ImageButton
@@ -103,7 +105,7 @@
                     tools:ignore="VectorDrawableCompat" />
 
             </RelativeLayout>
-
+-->
 
             <RelativeLayout
                 android:id="@+id/layout_name"
@@ -130,11 +132,12 @@
 
                 <EditText
                     android:id="@+id/txt_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/head_name"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="16dp"
                     android:background="@null"
                     android:enabled="false"
                     android:gravity="left"
@@ -176,15 +179,16 @@
 
                 <EditText
                     android:id="@+id/txt_address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/head_address"
                     android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginLeft="16dp"
                     android:background="@null"
                     android:enabled="false"
                     android:gravity="left"
-                    android:inputType="textPersonName"
+                    android:inputType="textMultiLine"
                     android:padding="10dp"
                     android:textColor="@color/colorBlack"
                     android:textSize="18sp" />
@@ -222,7 +226,7 @@
 
                 <EditText
                     android:id="@+id/txt_mobile"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/head_mobile"
                     android:layout_marginStart="16dp"
@@ -230,7 +234,9 @@
                     android:background="@null"
                     android:enabled="false"
                     android:gravity="left"
-                    android:inputType="textPersonName"
+                    android:inputType="phone"
+                    android:layout_marginEnd="16dp"
+
                     android:padding="10dp"
                     android:textColor="@color/colorBlack"
                     android:textSize="18sp" />
@@ -268,11 +274,12 @@
 
                 <TextView
                     android:id="@+id/txt_email"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/head_email"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="16dp"
                     android:background="@null"
                     android:enabled="false"
                     android:gravity="left"
@@ -288,7 +295,7 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_edit"
             android:layout_width="wrap_content"
             android:layout_height="59dp"
@@ -298,6 +305,7 @@
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
-    </android.support.constraint.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+            app:tint="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -22,8 +22,8 @@ interface ApiInterface {
 
     }
 
-    @get:POST("product/getAll")
-    val allProducts: Call<StatusItemModel>
+    @POST("product/getAllproducts")
+    fun allProducts(): Call<StatusItemModel>
 
     @FormUrlEncoded
     @POST("auth/register")
@@ -47,6 +47,12 @@ interface ApiInterface {
     @POST("area/assignedAreas")
     fun assignedAreas(
     ): Call<AssignedAreaModel>
+
+    @FormUrlEncoded
+    @POST("validatePromo")
+    fun validatePromo( @Field ("areaId") areaId: Int?,
+                       @Field ("code") code: String?
+    ): Call<ValidatePromoModel>
 
     @FormUrlEncoded
     @POST("auth/forgotPassword")
@@ -125,6 +131,7 @@ interface ApiInterface {
             @Field("products") products: String?,
             @Field("areaId") areaId: Int?,
             @Field("orderPhone") orderPhone: String?
+//            @Field("promo") promo: String?
 
     ): Call<StatusModel>
 

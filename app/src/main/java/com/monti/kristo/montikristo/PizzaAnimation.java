@@ -1,7 +1,8 @@
 package com.monti.kristo.montikristo;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -53,8 +54,10 @@ public class PizzaAnimation extends AppCompatActivity {
 
         continueButton = findViewById(R.id.continuebtn);
         continueButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), MyCartActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             finish();
         });
-
     }
 }

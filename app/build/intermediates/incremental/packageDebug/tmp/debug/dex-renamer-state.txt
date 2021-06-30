@@ -1,4 +1,4 @@
-#Thu Apr 11 12:58:57 PKT 2019
+#Tue Jun 29 11:57:17 PKT 2021
 path.3=classes2.dex
 path.2=classes.dex
 path.1=classes.dex
@@ -7,7 +7,7 @@ renamed.3=classes4.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex
-base.3=/home/reactivespace/Reactive Space/MontiKristolatest/MontiKristo/app/build/intermediates/transforms/dexMerger/debug/2
-base.2=/home/reactivespace/Reactive Space/MontiKristolatest/MontiKristo/app/build/intermediates/transforms/dexMerger/debug/1
-base.1=/home/reactivespace/Reactive Space/MontiKristolatest/MontiKristo/app/build/intermediates/transforms/dexMerger/debug/0
-base.0=/home/reactivespace/Reactive Space/MontiKristolatest/MontiKristo/app/build/intermediates/transforms/dexMerger/debug/2
+base.3=D\:\\Projects\\MontiKristolatest\\MontiKristo\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\2
+base.2=D\:\\Projects\\MontiKristolatest\\MontiKristo\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\2
+base.1=D\:\\Projects\\MontiKristolatest\\MontiKristo\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1
+base.0=D\:\\Projects\\MontiKristolatest\\MontiKristo\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0

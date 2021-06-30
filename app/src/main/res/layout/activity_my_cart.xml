@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraint_layout"
+    android:id="@+id/constraint_layout_mycart"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -10,14 +10,14 @@
     tools:context=".MyCartActivity">
 
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarMain"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@null"
         android:elevation="10dp"
         app:titleTextColor="@color/colorWhite">
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <com.flaviofaria.kenburnsview.KenBurnsView
         android:id="@+id/header"
@@ -32,22 +32,26 @@
         android:id="@+id/pizzaNameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="16dp"
+        android:text=""
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/header"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarMain" />
+        app:layout_constraintBottom_toTopOf="@+id/pizza_ingredients"
+        app:layout_constraintStart_toStartOf="@+id/header" />
 
     <TextView
         android:id="@+id/pizza_ingredients"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:text=""
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/pizzaNameTitle"
-        app:layout_constraintTop_toBottomOf="@+id/pizzaNameTitle" />
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/header"
+        app:layout_constraintEnd_toEndOf="@+id/header"
+        app:layout_constraintStart_toStartOf="@+id/pizzaNameTitle" />
 
 
     <include
@@ -91,7 +95,7 @@
             android:background="#c0c0c0" />
 
         <TextView
-            android:id="@+id/pizzaName"
+            android:id="@+id/dealName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -134,7 +138,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="4dp">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/yourcardid"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -145,8 +149,8 @@
                 android:elevation="6dp"
                 app:cardCornerRadius="5dp">
 
-                <Button
-                    android:id="@+id/btnQtySub"
+                <ImageView
+                    android:id="@+id/btnDealQtySub"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_gravity="left"
@@ -166,8 +170,8 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btnQtyAdd"
+                <ImageView
+                    android:id="@+id/btnDealQtyAdd"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_gravity="right"
@@ -177,7 +181,7 @@
                     android:background="@drawable/button_background_positive" />
 
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
 
@@ -258,7 +262,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/sub_total_amnt"
+                android:id="@+id/deals_sub_total_amnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -371,14 +375,15 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_cOrder"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_height"
+        android:backgroundTint="@color/colorButton"
+        app:cornerRadius="@dimen/button_radius"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/rounded_btn_login"
         android:elevation="10dp"
         android:gravity="center"
         android:text="Submit"
@@ -388,4 +393,4 @@
         app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
         app:layout_constraintStart_toStartOf="@+id/linearLayout3" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

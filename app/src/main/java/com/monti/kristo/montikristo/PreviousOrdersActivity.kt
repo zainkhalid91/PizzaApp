@@ -3,13 +3,14 @@ package com.monti.kristo.montikristo
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.TypedValue
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.crashlytics.android.Crashlytics
@@ -29,7 +30,7 @@ import java.util.*
 
 class PreviousOrdersActivity : AppCompatActivity() {
 
-    internal lateinit var btn_back: Button
+    internal lateinit var btn_back: ImageView
     internal var price: Int = 0
     internal var fee: Int = 0
     internal var cid: Int = 0
@@ -47,7 +48,7 @@ class PreviousOrdersActivity : AppCompatActivity() {
 
         recyclerView = findViewById<View>(R.id.recycler_view_prev_order) as RecyclerView
         recyclerView!!.isNestedScrollingEnabled = false
-        btn_back = findViewById<View>(R.id.btn_back_prevOrder) as Button
+        btn_back = findViewById<View>(R.id.btn_back_prevOrder) as ImageView
         progressDialog = findViewById(R.id.progressBar)
 
         val extras = intent.extras

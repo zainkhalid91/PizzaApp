@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/order_detail_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".OrderDetailsActivitly">
 
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -17,13 +18,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <ImageView
             android:id="@+id/btn_back_odetail"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="left"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:background="@drawable/ic_arrow_back_black_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="30dp"
-            android:gravity="center"
+            android:layout_marginLeft="22dp"
+            android:gravity="center_vertical"
             android:text="Order Booking Details"
             android:textColor="@color/colorBlack"
             android:textSize="20sp"
@@ -45,12 +46,13 @@
             app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
@@ -114,7 +116,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/sub_total_amnt"
+                    android:id="@+id/deals_sub_total_amnt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -165,12 +167,50 @@
 
             </RelativeLayout>
 
+
+            <RelativeLayout
+                android:id="@+id/layout_six"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/layout_two">
+
+                <TextView
+                    android:id="@+id/discount_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="left"
+                    android:padding="10dp"
+                    android:text="Discount"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/discount_amount_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="16dp"
+                    android:gravity="left"
+                    android:padding="10dp"
+                    android:text="RS -00.00"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/layout_four"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/layout_three">
+                app:layout_constraintTop_toBottomOf="@id/layout_six">
 
                 <TextView
                     android:id="@+id/total"
@@ -351,11 +391,78 @@
                     android:background="#c0c0c0" />
             </RelativeLayout>
 
+
+
+            <RelativeLayout
+                android:id="@+id/layout_promo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/relalayout">
+
+                <TextView
+                    android:id="@+id/head_promo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="left"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:text="Promo code"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edittxt_promo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/head_promo"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toStartOf="@+id/validate_textview"
+                    android:background="@null"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/validate_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/head_promo"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="16dp"
+                    android:gravity="center_horizontal"
+                    android:text="Validate"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/edittxt_promo"
+                    android:background="#c0c0c0" />
+
+            </RelativeLayout>
+
+
             <RelativeLayout
                 android:id="@+id/layout_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="0dp"
                 android:orientation="horizontal"
 
                 app:layout_constraintTop_toBottomOf="@id/relalayout">
@@ -391,7 +498,7 @@
                     android:textSize="18sp" />
 
                 <View
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@id/txt_address"
                     android:background="#c0c0c0" />
@@ -444,68 +551,26 @@
 
 
             <RelativeLayout
-                android:id="@+id/layout_add_items"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:orientation="horizontal"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@id/layout_mobile">
-
-                <TextView
-                    android:id="@+id/head_Psize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:gravity="left"
-                    android:text="+ Add SMS Reminder"
-                    android:textColor="@color/colorRed"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/head_Pqty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginRight="32dp"
-                    android:gravity="left"
-                    android:text="+ Add Custom Message"
-                    android:textColor="@color/colorRed"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/layout_btn_order"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:padding="8dp">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_order"
-                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/button_height"
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="48dp"
                     android:layout_marginLeft="48dp"
                     android:layout_marginEnd="48dp"
                     android:layout_marginRight="48dp"
-                    android:background="@drawable/rounded_btn_login"
+                    android:backgroundTint="@color/colorButton"
                     android:elevation="10dp"
                     android:text="Confirm Order"
-                    android:textSize="18sp" />
+                    android:textSize="16sp"
+                    app:cornerRadius="@dimen/button_radius" />
 
             </RelativeLayout>
 
@@ -513,4 +578,4 @@
 
     </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

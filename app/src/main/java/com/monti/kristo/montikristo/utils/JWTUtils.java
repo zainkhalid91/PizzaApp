@@ -1,7 +1,7 @@
 package com.monti.kristo.montikristo.utils;
 
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 import android.util.Base64;
 import android.util.Log;
 

@@ -1,9 +1,9 @@
 package com.monti.kristo.montikristo.adapters
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +34,7 @@ class PreviousOrderAdapter(private val mContext: Context, private val cartItemsM
 
         when (head.OrderStatus) {
             "Delivered" -> holder.status.setTextColor(ContextCompat.getColor(mContext, R.color.md_green_500))
+            "Pending" -> holder.status.setTextColor(ContextCompat.getColor(mContext, R.color.md_orange_500))
         }
 
         holder.recyclerView.layoutManager = LinearLayoutManager(mContext)
